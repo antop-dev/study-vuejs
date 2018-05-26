@@ -1,6 +1,6 @@
-# y
+# study-vuejs
 
-> Study Vue.js guide
+[https://kr.vuejs.org/v2/guide/](https://kr.vuejs.org/v2/guide/)
 
 ## Build Setup
 
