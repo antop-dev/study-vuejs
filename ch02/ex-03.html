@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+
+<script>
+    /*
+    인스턴스 라이프사이클 훅
+     */
+
+    new Vue({
+        data: {
+            a: 1
+        },
+        created: function () {
+            // 모든 라이프사이클 훅은 this 컨텍스트가 호출하는 Vue 인스턴스를 가리키며 호출됩니다.
+            // `this` 는 vm 인스턴스를 가리킵니다.
+            console.log('a is: ' + this.a)
+        }
+    })
+    // => "a is: 1"
+
+    // 다른 라이프사이클 훅
+    // https://kr.vuejs.org/v2/api/#%EC%98%B5%EC%85%98-%EB%9D%BC%EC%9D%B4%ED%94%84%EC%82%AC%EC%9D%B4%ED%81%B4-%ED%9B%85
+</script>
+
+</body>
+</html>
