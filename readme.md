@@ -8,7 +8,7 @@ Already know HTML, CSS and JavaScript? Read the guide and start building things 
 ### Versatile
 An incrementally adoptable ecosystem that scales between a library and a full-featured framework.
 
-## Performant
+### Performant
 
 20KB min+gzip Runtime
 
