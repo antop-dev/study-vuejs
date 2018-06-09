@@ -1,0 +1,47 @@
+<!--
+계산된 속성
+# 계산된 캐싱 vs 메소드
+-->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+
+<div id="example">
+    <p>원본 메시지: "{{ message }}"</p>
+    <!--
+    <p>뒤집히도록 계산된 메시지: "{{ reversedMessage }}"</p>
+    <p>뒤집히도록 계산된 메시지: "{{ reverse() }}"</p>
+    -->
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    var vm = new Vue({
+        el: '#example',
+        data: {
+            message: '안녕하세요'
+        },
+        computed: {
+            // 계산된 속성은 종속성에 따라 캐시된다.
+            reversedMessage: function () {
+                console.log("call computed reversedMessage.");
+                return this.message.split('').reverse().join('');
+            }
+        },
+        methods: {
+            // 캐싱을 원하지 않는 경우 메소드를 사용하십시오.
+            reverse: function () {
+                console.log("call reverse()");
+                return this.message.split('').reverse().join('');
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!--
+인라인 스타일 바인딩
+# 객체 구문
+-->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+
+<div id="app">
+    <!--
+    v-bind:style 객체 구문은 매우 직설적입니다. 거의 CSS 처럼 보이지만 JavaScript 객체입니다.
+    속성 이름에 camelCase와 kebab-case (따옴표를 함께 사용해야 합니다)를 사용할 수 있습니다.
+    -->
+    <div v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }">인라인 스타일 바인딩 - &#35; 객체 구문</div>
+    <!-- <div style="color: red; font-size: 30px;"></div> -->
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            activeColor: 'red',
+            fontSize: 30
+        }
+    });
+</script>
+
+</body>
+</html>

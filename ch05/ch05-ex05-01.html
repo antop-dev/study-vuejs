@@ -1,0 +1,46 @@
+<!--
+인라인 스타일 바인딩
+# 자동 접두사
+-->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+
+<div id="app">
+    <!-- v-bind:style 에 브라우저 벤더 접두어가 필요한 CSS 속성을 사용하면 Vue는 자동으로 해당 접두어를 감지하여 스타일을 적용합니다 -->
+    <h1>The transform Property</h1>
+    <h2>transform: rotate(20deg):</h2>
+    <div v-bind:style="baseStyles">인라인 스타일 바인딩 - &#35; 자동 접두어</div>
+
+    <!-- safari -->
+    <!--
+    <div style="-webkit-transform: rotate(20deg); ">인라인 스타일 바인딩 - # 자동 접두어</div>
+    -->
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            baseStyles: {
+                width: '300px',
+                height: '40px',
+                backgroundColor: 'yellow',
+                // -ms-transform: rotate(20deg); /* IE 9 */
+                // -webkit-transform: rotate(20deg); /* Safari 3-8 */
+                // transform: rotate(20deg);
+                transform: 'rotate(20deg)'
+                // Antop : CSS 속성을 브라우저에 접두어를 적용 해준다.
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
