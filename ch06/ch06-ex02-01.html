@@ -1,0 +1,38 @@
+<!--
+조건부 렌더링
+v-show
+
+v-if는 조건부 블럭 안의 이벤트 리스너와 자식 컴포넌트가 토글하는 동안 적절하게 제거되고 다시 만들어지기 때문에 "진짜" 조건부 렌더링 입니다
+v-if는 또한 게으릅니다 초기 렌더링에서 조건이 거짓인 경우 아무것도 하지 않습니다. 조건 블록이 처음으로 참이 될 때 까지 렌더링 되지 않습니다.
+비교해보면, v-show는 훨씬 단순합니다. CSS 기반 토글만으로 초기 조건에 관계 없이 엘리먼트가 항상 렌더링 됩니다.
+일반적으로 v-if는 토글 비용이 높고 v-show는 초기 렌더링 비용이 더 높습니다. 매우 자주 바꾸기를 원한다면 v-show를, 런타임 시 조건이 바뀌지 않으면 v-if를 권장합니다.
+-->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+
+<div id="app">
+    <!--
+    v-show가 있는 엘리먼트는 항상 렌더링 되고 DOM에 남아있다는 점입니다.
+    v-show는 단순히 엘리먼트에 display CSS 속성을 토글합니다.
+    -->
+    <h1 v-show="ok">안녕하세요!</h1>
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            ok: true
+        }
+    });
+</script>
+
+</body>
+</html>

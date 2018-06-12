@@ -1,0 +1,52 @@
+<!--
+조건부 렌더링
+v-if
+# key를 이용한 재사용 가능한 엘리먼트 제어
+-->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+
+<div id="app">
+    <div>
+        <template v-if="loginType === 'username'">
+            <!-- 이 엘리먼트는 재사용 된다. -->
+            <label for="username">사용자 이름</label>
+            <input id="username" placeholder="사용자 이름을 입력하세요">
+            <br>
+            <!--
+            이 엘리먼트는 새로 랜더링 된다.
+            -->
+            <label for="phone">연락처</label>
+            <input id="phone" type="tel" placeholder="연락처를 입력하세요"/>
+        </template>
+        <template v-else>
+            <label for="email">이메일</label>
+            <input id="email" placeholder="이메일 주소를 입력하세요">
+        </template>
+    </div>
+    <button @click="change">로그인 유형 변경</button>
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            loginType: 'username'
+        },
+        methods: {
+            change: function () {
+                this.loginType = (this.loginType === 'username') ? 'email' : 'username';
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

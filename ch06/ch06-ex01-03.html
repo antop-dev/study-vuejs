@@ -1,0 +1,37 @@
+<!--
+조건부 렌더링
+
+# v-else
+-->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+
+<div id="app">
+    <div v-if="Math.random() > 0.5">
+        이제 나를 볼 수 있어요
+    </div>
+    <!--
+    v-else 디렉티브를 사용하여 v-if에 대한 "else 블록"을 나타낼 수 있습니다
+    v-else 엘리먼트는 v-if 엘리먼트 또는 v-else-if 엘리먼트 바로 뒤에 있어야 합니다.
+    그렇지 않으면 인식할 수 없습니다.
+    -->
+    <div v-else>
+        이제는 안보입니다
+    </div>
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    var vm = new Vue({
+        el: '#app'
+    });
+</script>
+
+</body>
+</html>

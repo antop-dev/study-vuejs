@@ -1,0 +1,54 @@
+<!--
+조건부 렌더링
+v-if
+# key를 이용한 재사용 가능한 엘리먼트 제어
+-->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+
+<div id="app">
+    <div>
+        <!--
+        Vue는 가능한 한 효율적으로 엘리먼트를 렌더링하려고 시도하며 종종 처음부터 렌더링을 하지않고 다시 사용합니다.
+        Vue를 매우 빠르게 만드는데 도움이 되는 것 이외에 몇가지 유용한 이점이 있습니다.
+        예를 들어 사용자가 여러 로그인 유형을 트랜지션할 수 있도록 허용하는 경우입니다.
+        -->
+        <template v-if="loginType === 'username'">
+            <label>사용자 이름</label>
+            <input placeholder="사용자 이름을 입력하세요">
+        </template>
+        <template v-else>
+            <label>이메일</label>
+            <input placeholder="이메일 주소를 입력하세요">
+        </template>
+        <!--
+        위 코드에서 loginType을 바꾸어도 사용자가 이미 입력한 내용은 지워지지 않습니다.
+        두 템플릿 모두 같은 요소를 사용하므로 <input>은 대체되지 않고 단지 placeholder만 변경됩니다.
+        -->
+    </div>
+    <button @click="change">로그인 유형 변경</button>
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            loginType: 'username'
+        },
+        methods: {
+            change: function () {
+                this.loginType = (this.loginType === 'username') ? 'email' : 'username';
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

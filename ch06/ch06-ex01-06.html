@@ -1,0 +1,54 @@
+<!--
+조건부 렌더링
+v-if
+# key를 이용한 재사용 가능한 엘리먼트 제어
+-->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+
+<div id="app">
+    <div>
+        <!--
+        엘리먼트 재사용은 항상 바람직하지는 않습니다.
+        때문에 "이 두 엘리먼트는 완전히 별개이므로 다시 사용하지 마십시오."라고 알리는 방법을 제공합니다.
+        유일한 값으로 key 속성을 추가하십시오.
+        -->
+        <template v-if="loginType === 'username'">
+            <label>사용자 이름</label>
+            <input placeholder="사용자 이름을 입력하세요" key="username-input">
+        </template>
+        <template v-else>
+            <label>이메일</label>
+            <input placeholder="이메일 주소를 입력하세요" key="email-input">
+        </template>
+        <!--
+        이제 트랜지션 할 때마다 입력이 처음부터 렌더링됩니다.
+        <label> 엘리먼트는 key 속성이 없기 때문에 여전히 효율적으로 재사용 됩니다.
+        -->
+    </div>
+    <button @click="change">로그인 유형 변경</button>
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            loginType: 'username'
+        },
+        methods: {
+            change: function () {
+                this.loginType = (this.loginType === 'username') ? 'email' : 'username';
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
