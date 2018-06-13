@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+
+<div id="app">
+    <ul>
+        <li v-for="todo in todos" v-show="!todo.isComplete">{{ todo.content }}</li>
+    </ul>
+</div>
+
+
+<script>
+    Vue.config.devtools = true;
+
+    const todos = [{
+        title: '카이 호스트만의 코어 자바8',
+        isComplete: true
+    }, {
+        title: '모던 웹을 위한 Node.js 프로그래밍',
+        isComplete: false
+    }, {
+        title: '실전 스프링 부트 워크북',
+        isComplete: false
+    }];
+
+    const vm = new Vue({
+        el: '#app',
+        // data : { todos : todos }
+        // 잘못 했는데도 출력은 정상 작동 한다!?
+        data: todos
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!--
+리스트 랜더링
+배열 변경 감지
+# 배열 대체
+
+이 방법을 사용하면 원본 배열을 변형하지 않고 항상 새 배열을 반환합니다.
+변형이 없는 방법으로 작업할 때 이전 배열을 새 배열로 바꿀 수 있습니다.
+-->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://unpkg.com/axios@0.12.0/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <link rel="stylesheet" type="text/css" href="ch07-ex04.css">
+</head>
+<body>
+
+<div id="app">
+    <input type="text" placeholder="filter text..." v-model="filterText">
+    <button type="button" @click="filter">filter</button>
+    <button type="button" @click="concat">concat</button>
+    <button type="button" @click="slice">slice</button>
+
+    <div class="users">
+        <span class="user" v-for="(item, index) in items" key="index">
+            <img :src="item.picture.large">
+            <div class="top-left">{{ index }}</div>
+            <div class="name" :title="`${item.name.first} ${item.name.last}`">
+                {{ item.name.first }} {{ item.name.last }}
+            </div>
+        </span>
+    </div>
+</div>
+
+
+<script>
+    Vue.config.devtools = true;
+
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            filterText: '',
+            items: []
+        },
+        created: function () {
+            const vm = this;
+
+            axios.get('https://randomuser.me/api?results=30')
+                .then((response) => {
+                    for (let item of response.data.results) {
+                        vm.items.push(item);
+                    }
+                });
+        },
+        methods: {
+            // filter() 메소드는 제공된 함수로 구현된 테스트를 통과하는 모든 요소가 있는 새로운 배열을 만듭니다.
+            // https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
+            filter: function () {
+                const vm = this;
+
+                this.items = this.items.filter((element) => {
+                    let name = element.name.first + ' ' + element.name.last;
+                    return name.indexOf(vm.filterText) >= 0;
+                });
+            },
+            // concat() 메서드는 인자로 주어진 배열이나 값들을 기존 배열에 합쳐서 새 배열을 반환합니다.
+            // https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Array/concat
+            concat: function () {
+                const vm = this;
+                axios.get('https://randomuser.me/api?results=10')
+                    .then((response) => vm.items = vm.items.concat(response.data.results));
+            },
+            // slice() 메소드는 어떤 배열의 begin부터 end까지(end는 불포함)에 대한 shallow copy를 새로운 배열 객체로 반환합니다.
+            // 원본 배열은 수정되지 않습니다.
+            // https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Array/slice
+            slice: function () {
+                this.items = this.items.slice(2, 10);
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
