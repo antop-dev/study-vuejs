@@ -1,0 +1,35 @@
+<!--
+Event Propagation
+-->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelector('#a').addEventListener('click', function (e) {
+                // stop event
+                e.preventDefault();
+            });
+
+            document.querySelector('#f').addEventListener('submit', function (e) {
+                // stop event
+                e.preventDefault();
+
+                let url = this.action + '?q=' + encodeURI(this.querySelector('[name=q]').value);
+                alert(url);
+            });
+        });
+    </script>
+</head>
+<body>
+
+<a id="a" href="https://www.google.com/">Go to Google</a>
+
+<form id="f" action="https://www.google.com/search" method="get"">
+    <input type="text" placeholder="keyword" name="q" value="vuejs"/>
+    <button type="submit">Search</button>
+</form>
+
+</body>
+</html>

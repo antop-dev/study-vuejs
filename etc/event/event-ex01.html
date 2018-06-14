@@ -1,0 +1,97 @@
+<!--
+Event Propagation
+-->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <script src="./assets/function.js"></script>
+    <link rel="stylesheet" type="text/css" href="./assets/style.css">
+    <style type="text/css">
+        #box1 {
+            width: 300px;
+            height: 300px;
+            background-color: red;
+        }
+
+        #box2 {
+            width: 200px;
+            height: 200px;
+            background-color: green;
+        }
+
+        #box3 {
+            width: 100px;
+            height: 100px;
+            background-color: blue;
+        }
+    </style>
+    <script type="text/javascript">
+        // 해당 엘리먼트의 태그명과 아이디를 리턴
+        const getElTitle = function (el) {
+            let result = el === window ? 'window' : el.tagName;
+            if (el.id) {
+                result += '#' + el.id;
+            }
+            return result;
+        };
+        // 이벤트의 페이즈 단계를 리턴
+        const getEventPhase = function (e) {
+            if (e.eventPhase === Event.CAPTURING_PHASE) {
+                return "Capturing Phase";
+            } else if (e.eventPhase === Event.BUBBLING_PHASE) {
+                return "Bubbling Phase";
+            } else if (e.eventPhase === Event.AT_TARGET) {
+                return "Target Phase";
+            }
+        };
+
+        // 클릭 이벤트 핸들러
+        const handler = function (e) {
+            console.log('--');
+
+            if (this.id === e.target.id) {
+                console.log(getElTitle(this) + ' is click event. (' + getEventPhase(e) + ')');
+            } else {
+                console.log(getElTitle(this) + ' is click event from #' + getElTitle(e.target) + '. (' + getEventPhase(e) + ')');
+            }
+
+            // console.log(e);
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // Event Capture
+            window.addEventListener('click', handler, true);
+            document.querySelector('html').addEventListener('click', handler, true);
+            document.querySelector('body').addEventListener('click', handler, true);
+
+            // Event
+            window.addEventListener('click', handler);
+            document.querySelector('html').addEventListener('click', handler);
+            document.querySelector('body').addEventListener('click', handler);
+
+            document.querySelectorAll('div').forEach(function o(el) {
+                // 1. Event Capture
+                el.addEventListener('click', handler, true);
+                // 2. Event
+                el.addEventListener('click', handler);
+                // 3. Event
+                el.addEventListener('click', function (e) {
+                    console.log('---');
+                    console.log('hello click! ' + this.id);
+                })
+            });
+
+        });
+    </script>
+</head>
+<body>
+
+<div id="box1">
+    <div id="box2">
+        <div id="box3"></div>
+    </div>
+</div>
+
+</body>
+</html>
