@@ -1,0 +1,188 @@
+<!--
+이벤트 핸들링
+이벤트 수식어
+
+이벤트 핸들러 내부에서 event.preventDefault() 또는 event.stopPropagation()를 호출하는 것은 매우 보편적인 일입니다.
+메소드 내에서 쉽게 이 작업을 할 수 있지만, DOM 이벤트 세부 사항을 처리하는 대신 데이터 로직에 대한 메소드만 사용할 수 있으면 더 좋을 것입니다.
+
+이 문제를 해결하기 위해, Vue는 v-on 이벤트에 이벤트 수식어를 제공합니다.
+수식어는 점으로 표시된 접미사 입니다.
+-->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <style>
+        .wrap {
+            margin: 5px 0;
+            padding: 5px;
+            background-color: #eee;
+        }
+
+        .frame {
+            border: 1px solid #000;
+            width: 500px;
+            height: 100px;
+            overflow-x: hidden;
+            overflow-y: scroll;
+        }
+    </style>
+</head>
+<body>
+
+<div id="app">
+    <div class="wrap">
+        <div v-on:click="doThis">click</div>
+    </div>
+
+    <div class="wrap">
+        <!-- 이벤트 리스너를 추가할 때 캡처모드를 사용합니다 -->
+        <!-- 즉, 내부 엘리먼트를 대상으로 하는 이벤트가 해당 엘리먼트에서 처리되기 전에 여기서 처리합니다. -->
+        <div v-on:click.capture="doThis">
+            <button type="button">click.capture</button>
+        </div>
+    </div>
+
+    <div class="wrap">
+        <!-- 클릭 이벤트 전파가 중단됩니다 -->
+        <div v-on:click.stop="doThis">click.stop</div>
+    </div>
+
+    <div class="wrap">
+        <!-- 제출 이벤트가 페이지를 다시 로드 하지 않습니다 -->
+        <form v-on:submit.prevent="onSubmit">
+            <input type="text"/>
+            <button type="submit" @click="doThis">submit.prevent</button>
+        </form>
+    </div>
+
+    <div class="wrap">
+        <!-- 수식어는 체이닝 가능합니다 -->
+        <a href="https://www.google.com/" v-on:click.stop.prevent="doThat">click.stop.prevent</a>
+    </div>
+
+    <div class="wrap">
+        <!-- 단순히 수식어만 사용할 수 있습니다 -->
+        <form v-on:submit.prevent>
+            <input type="text"/>
+            <button type="submit" @click="doThis">submit.prevent</button>
+        </form>
+    </div>
+
+    <div class="wrap">
+        <!-- event.target이 엘리먼트 자체인 경우에만 트리거를 처리합니다 -->
+        <!-- 자식 엘리먼트에서는 안됩니다 -->
+        <div>
+            <div v-on:click.self="doThat">
+                <div v-on:click="doThis">click</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="wrap">
+        <!-- 모든 클릭을 막는다 -->
+        <div v-on:click.prevent.self="doThis">click.prevent.self</div>
+    </div>
+
+    <div class="wrap">
+        <!--엘리먼트 자체에 대한 클릭만 방지합니다. -->
+        <div v-on:click.self.prevent="doThis">click.self.prevent</div>
+    </div>
+
+    <div class="wrap">
+        <!--
+        클릭 이벤트는 최대 한번만 트리거 됩니다.
+        2.1.4+
+        -->
+        <a v-on:click.once="doThis">click.once</a>
+    </div>
+
+    <!--
+    추가로, Vue는 .passive 수식어를 제공합니다.
+    특히 모바일 환경에서 성능향상에 도움이 됩니다.
+    예를 들어, 브라우저는 핸들러가 event.preventDefault()를 호출할지 알지 못하므로 프로세스가 완료된 후 스크롤 합니다.
+    .passive 수식어는 이 이벤트가 기본 동작을 멈추지 않는다는 것을 브라우저에 알릴 수 있습니다.
+
+    https://developers.google.com/web/updates/2016/06/passive-event-listeners?hl=ko
+    -->
+    <div class="frame" @scroll="onScroll">
+        HTML click event. (Capturing Phase)<br/>
+        00:58:48.618 ch09-ex04-01.html?_ijt=bcsoq4694kkpbo4si8pja3tr4m:126 BODY click event. (Capturing Phase)<br/>
+        00:58:48.618 ch09-ex04-01.html?_ijt=bcsoq4694kkpbo4si8pja3tr4m:126 DIV click event. (Capturing Phase)<br/>
+        00:58:48.618 ch09-ex04-01.html?_ijt=bcsoq4694kkpbo4si8pja3tr4m:126 DIV click event. (Bubbling Phase)<br/>
+        00:58:48.618 ch09-ex04-01.html?_ijt=bcsoq4694kkpbo4si8pja3tr4m:126 BODY click event. (Bubbling Phase)<br/>
+        00:58:48.618 ch09-ex04-01.html?_ijt=bcsoq4694kkpbo4si8pja3tr4m:126 HTML click event. (Bubbling Phase)<br/>
+        00:58:48.618 ch09-ex04-01.html?_ijt=bcsoq4694kkpbo4si8pja3tr4m:126 BODY click event. (Capturing Phase)<br/>
+        00:58:48.618 ch09-ex04-01.html?_ijt=bcsoq4694kkpbo4si8pja3tr4m:126 DIV click event. (Capturing Phase)<br/>
+        00:58:48.618 ch09-ex04-01.html?_ijt=bcsoq4694kkpbo4si8pja3tr4m:126 DIV click event. (Bubbling Phase)<br/>
+        00:58:48.618 ch09-ex04-01.html?_ijt=bcsoq4694kkpbo4si8pja3tr4m:126 BODY click event. (Bubbling Phase)<br/>
+        00:58:48.618 ch09-ex04-01.html?_ijt=bcsoq4694kkpbo4si8pja3tr4m:126 HTML click event. (Bubbling Phase)<br/>
+        00:58:48.618 ch09-ex04-01.html?_ijt=bcsoq4694kkpbo4si8pja3tr4m:126 BODY click event. (Capturing Phase)<br/>
+        00:58:48.618 ch09-ex04-01.html?_ijt=bcsoq4694kkpbo4si8pja3tr4m:126 DIV click event. (Capturing Phase)<br/>
+        00:58:48.618 ch09-ex04-01.html?_ijt=bcsoq4694kkpbo4si8pja3tr4m:126 DIV click event. (Bubbling Phase)<br/>
+        00:58:48.618 ch09-ex04-01.html?_ijt=bcsoq4694kkpbo4si8pja3tr4m:126 BODY click event. (Bubbling Phase)<br/>
+        00:58:48.618 ch09-ex04-01.html?_ijt=bcsoq4694kkpbo4si8pja3tr4m:126 HTML click event. (Bubbling Phase)<br/>
+    </div>
+
+</div>
+
+<script>
+    // 이벤트의 페이즈 단계를 리턴
+    const getEventPhase = function (e) {
+        if (e.eventPhase === Event.CAPTURING_PHASE) {
+            return "Capturing Phase";
+        } else if (e.eventPhase === Event.BUBBLING_PHASE) {
+            return "Bubbling Phase";
+        } else if (e.eventPhase === Event.AT_TARGET) {
+            return "Target Phase";
+        }
+    };
+
+    Vue.config.devtools = true;
+
+    const vm = new Vue({
+        el: '#app',
+        methods: {
+            doThis: function (e) {
+                console.log('do this. ' + getEventPhase(e));
+                console.log(e.target);
+            },
+            doThat: function (e) {
+                console.log('do that. ' + getEventPhase(e));
+                console.log(e.target);
+            },
+            onSubmit: function (e) {
+                console.log('on submit. ' + getEventPhase(e));
+                console.log(e.target);
+            },
+            onScroll(e) {
+                console.log('on scroll. top=' + e.target.scrollTop);
+            }
+        }
+    });
+
+    // 버블링, 캡쳐 테스트를 위한 이벤트 핸들러 추가
+    const click = function (e) {
+        console.log(this.tagName + ' click event. (' + getEventPhase(e) + ')');
+    }
+
+    document.body.addEventListener('click', click, true);
+    document.body.addEventListener('click', click);
+
+    document.querySelector('html').addEventListener('click', click, true);
+    document.querySelector('html').addEventListener('click', click);
+
+    document.querySelectorAll('p').forEach(function (el) {
+        el.addEventListener('click', click, true);
+        el.addEventListener('click', click);
+    });
+
+    document.querySelectorAll('.wrap').forEach(function (el) {
+        el.addEventListener('click', click, true);
+        el.addEventListener('click', click);
+    });
+</script>
+
+</body>
+</html>

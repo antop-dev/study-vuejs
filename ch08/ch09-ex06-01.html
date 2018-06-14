@@ -1,0 +1,40 @@
+<!--
+이벤트 핸들링
+키 수식어
+# 시스템 수식어 키 목록 (2.1.0+)
+
+다음 수식어를 사용해 해당 수식어 키가 눌러진 경우에만 마우스 또는 키보드 이벤트 리스너를 트리거 할 수 있습니다.
+-->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+
+<div id="app">
+    <!-- Alt + C -->
+    <input @keyup.alt.67="clear" placeholder="@keyup.alt.67">
+    <!-- Ctrl + Click -->
+    <div @click.ctrl="doSomething">Do something</div>
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    const vm = new Vue({
+        el: '#app',
+        methods: {
+            clear: function (e) {
+                e.target.value = '';
+            },
+            doSomething: function () {
+                alert('clicked!');
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!--
+이벤트 핸들링
+키 수식어
+
+키보드 이벤트를 청취할 때, 종종 공통 키 코드를 확인해야 합니다.
+Vue는 키 이벤트를 수신할 때 v-on에 대한 키 수식어를 추가할 수 있습니다.
+
+https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/keyCode
+http://keycode.info/
+-->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+
+<div id="app">
+    <p>
+        <!-- keyCode가 13일 때만 `vm.submit()`을 호출합니다  -->
+        <input v-on:keyup.13="submit" placeholder="v-on:keyup.13">
+    </p>
+
+    <p>
+        <!-- keyCode를 모두 기억하는 것은 힘듭니다. 그래서 Vue는 자주 사용하는 키의 알리아스를 제공합니다. -->
+        <input v-on:keyup.enter="submit" placeholder="v-on:keyup.enter">
+    </p>
+
+    <p>
+        <!-- 약어 사용도 가능합니다 -->
+        <input @keyup.enter="submit" placeholder="@keyup.enter">
+    </p>
+
+    <p>
+        <!-- 또한 전역 config.keyCodes 객체를 통해 사용자 지정 키 수식어 별칭을 지정할 수 있습니다. -->
+        <input @keydown.prevent.f1="submit" placeholder="@keydown.prevent.f1">
+    </p>
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    // `v-on:keyup.f1`을 사용할 수 있습니다.
+    Vue.config.keyCodes.f1 = 112;
+
+    const vm = new Vue({
+        el: '#app',
+        methods: {
+            submit: function (e) {
+                console.log("input : " + e.target.value);
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

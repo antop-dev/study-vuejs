@@ -1,0 +1,39 @@
+<!--
+이벤트 핸들링
+키 수식어
+# .exact 수식어 (2.5.0+)
+
+.exact 수식어는 다른 시스템 수식어와 조합해 그 핸들러가 실행되기 위해 정확한 조합이 눌러야하는 것을 보여줍니다.
+-->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+
+<div id="app">
+    <!-- Alt 또는 Shift와 함께 눌린 경우에도 실행됩니다. -->
+    <button @click.ctrl="onClick">A</button>
+    <!-- Ctrl 키만 눌려있을 때만 실행됩니다. -->
+    <button @click.ctrl.exact="onClick">A</button>
+    <!-- 아래 코드는 시스템 키가 눌리지 않은 상태인 경우에만 작동합니다. -->
+    <button @click.exact="onClick">A</button>
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    const vm = new Vue({
+        el: '#app',
+        methods: {
+            onClick: function () {
+                alert('clicked!');
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
