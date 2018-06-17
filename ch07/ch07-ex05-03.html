@@ -54,7 +54,7 @@
     // https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
     const add2 = function () {
         // 속성은 추가되지만 반응형 안됨.
-        // vm.$data.userProfile = Object.assign(vm.$data.userProfile, {
+        // data.userProfile = Object.assign(data.userProfile, {
         //     age: 28,
         //     favoriteColor: 'Mozilla Black'
         // });
@@ -69,7 +69,7 @@
     // _.extend()
     // https://lodash.com/docs/4.17.10#assignIn
     const add3 = function () {
-        data.userProfile = _.extend(data.userProfile, {
+        data.userProfile = _.extend({}, data.userProfile, {
             age: 33,
             favoriteColor: 'Lodash Blue'
         });

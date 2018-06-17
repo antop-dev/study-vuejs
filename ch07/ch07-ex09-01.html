@@ -16,7 +16,7 @@ v-for 와 v-if
 
 <div id="app">
     <ul>
-        <li v-for="todo in todos" v-show="!todo.isComplete">{{ todo.title }}</li>
+        <li v-for="todo in todos" v-if="!todo.isComplete">{{ todo.title }}</li>
     </ul>
 </div>
 
