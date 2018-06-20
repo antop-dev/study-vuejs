@@ -1,0 +1,32 @@
+<!--
+폼 입력 바인딩
+수식어
+# .trim
+
+v-model이 관리하는 input을 자동으로 trim 하기 원하면, trim 수정자를 추가하면 됩니다.
+-->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+
+<div id="app">
+    <input v-model.trim="msg">
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            msg: ''
+        }
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!--
+폼 입력 바인딩
+수식어
+# .number
+
+사용자 입력이 자동으로 숫자로 형변환 되기를 원하면 v-model이 관리하는 input에 number 수식어를 추가하면 됩니다.
+-->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+
+<div id="app">
+    <p>
+        <input v-model="age1" type="number">
+    </p>
+    <p>
+        <input v-model.number="age2" type="number">
+    </p>
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            age1: '',
+            age2: ''
+        }
+    });
+</script>
+
+</body>
+</html>
