@@ -1,0 +1,60 @@
+<!--
+컴포넌트
+Props가 아닌 속성
+# .sync 수식어 (2.3.0+)
+-->
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="https://kr.vuejs.org/js/vue.js"></script>
+</head>
+
+<body>
+
+<div id="app">
+    <p>parent: {{ bar }}</p>
+    <comp :foo.sync="bar"></comp>
+    <!-- <comp :foo="bar" @update:foo="val => bar = val"></comp> -->
+    <!--
+    [Vue warn]: Avoid mutating a prop directly since the value will be overwritten whenever the parent component re-renders.
+                Instead, use a data or computed property based on the prop's value. Prop being mutated: "foo"
+
+    하위 컴포넌트의 속성 변경 (하위 컴포넌트에서 변경)
+    => 하위 컴포넌트에서 할일 함
+    => 이벤트 발생
+    => 상위 컴포넌트 속성값 변경됨 (.sync에 의해서)
+    => 상위 컴포넌트에서 할일 함.
+    => 하위 컴포넌트의 속성값 변경됨.(상위 컴포넌트의 속성값이 변경 되었기 때문에)
+    => 무한 반복....
+    -->
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    Vue.component('comp', {
+        props: ['foo'],
+        template: '<button @click="increment">{{ foo }}</button>',
+        // use a data or computed property based on the prop's value
+        // https://kr.vuejs.org/v2/guide/components.html#단방향-데이터-흐름
+        methods: {
+            increment: function () {
+                this.foo += 1;
+                this.$emit('update:foo', this.foo);
+            }
+        }
+    });
+
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            bar: 0
+        }
+
+    });
+</script>
+
+</body>
+</html>
