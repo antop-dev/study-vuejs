@@ -2,6 +2,8 @@
 컴포넌트
 컴포넌트 사용하기
 # 전역 등록
+
+전역 컴포넌트를 등록하려면, Vue.component(tagName, options)를 사용합니다.
 -->
 <!DOCTYPE html>
 <html lang="ko">
@@ -26,6 +28,7 @@
         template: '<div>사용자 정의 컴포넌트 입니다!</div>'
     });
 
+    // 루트 인스턴스 생성
     const vm = new Vue({
         el: '#app'
     });
