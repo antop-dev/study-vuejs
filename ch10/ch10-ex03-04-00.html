@@ -1,0 +1,42 @@
+<!--
+컴포넌트
+Props가 아닌 속성
+# 사용자 정의 이벤트를 사용하여 폼 입력 컴포넌트 만들기
+
+사용자 정의 이벤트는 v-model 에서 작동하는 사용자 정의 입력을 만드는데에도 사용할 수 있습니다.
+기억하세요.
+-->
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="https://kr.vuejs.org/js/vue.js"></script>
+    <script src="https://cdn.rawgit.com/chrisvfritz/5f0a639590d6e648933416f90ba7ae4e/raw/974aa47f8f9c5361c5233bd56be37db8ed765a09/currency-validator.js"></script>
+</head>
+
+<body>
+
+<div id="app">
+    <p>
+        <input v-model="something">
+    </p>
+    <!-- 위 문장은 아래와 같습니다. -->
+    <p>
+        <input :value="something" @input="something = $event.target.value">
+    </p>
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            something: 112
+        }
+    });
+</script>
+
+</body>
+</html>

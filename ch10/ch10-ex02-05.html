@@ -1,0 +1,94 @@
+<!--
+컴포넌트
+Props
+# 단방향 데이터 흐름
+
+모든 props는 하위 속성과 상위 속성 사이의 단방향 바인딩을 형성합니다.
+상위 속성이 업데이트되면 하위로 흐르게 되지만 그 반대는 안됩니다.
+이렇게 하면 하위 컴포넌트가 실수로 부모의 상태를 변경하여 앱의 데이터 흐름을 추론하기 더 어렵게 만드는 것을 방지할 수 있습니다.
+
+일반적으로 prop을 변경시키고 싶은 유혹을 불러 일으킬 수있는 두 가지 경우가 있습니다.
+1. 이 prop는 초기 값을 전달 하는데만 사용되며 하위 컴포넌트는 이후에 이를 로컬 데이터 속성으로 사용하기만 합니다.
+2. prop는 변경되어야 할 원시 값으로 전달됩니다.
+-->
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="https://kr.vuejs.org/js/vue.js"></script>
+</head>
+
+<body>
+<p id="app1">
+    <button @click="counter++">count up</button>
+    <comp1 :counter="counter"></comp1>
+</p>
+
+<p id="app2">
+    <button @click="counter++">count up</button>
+    <!-- 이 prop는 초기 값을 전달 하는데만 사용되며 하위 컴포넌트는 이후에 이를 로컬 데이터 속성으로 사용하기만 합니다. -->
+    <comp2 :initial-counter="counter"></comp2>
+</p>
+
+<p id="app3">
+    <button @click="counter++">count up</button>
+    <!-- prop는 변경되어야 할 원시 값으로 전달됩니다. -->
+    <comp3 :counter="counter"></comp3>
+</p>
+
+<script>
+    Vue.config.devtools = true;
+
+    Vue.component('comp1', {
+        props: ['counter'],
+        template: '<div>{{ counter }}</div>'
+    });
+
+    Vue.component('comp2', {
+        props: ['initialCounter'],
+        template: '<div>{{ counter }} <span><button @click="counter++">+</button></span></div>',
+        data: function () {
+            // prop의 초기 값을 초기 값으로 사용하는 로컬 데이터 속성을 정의 하십시오.
+            return {
+                counter: this.initialCounter
+            };
+        }
+    });
+
+    Vue.component('comp3', {
+        props: ['counter'],
+        template: '<div>{{ numberWithCommas }}</div>',
+        computed: {
+            // prop 값으로 부터 계산된 속성을 정의 합니다.
+            numberWithCommas: function () {
+                return this.counter.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            }
+        }
+    });
+
+    const vm1 = new Vue({
+        el: '#app1',
+        data: {
+            counter: Math.floor(Math.random() * 10000)
+        }
+    });
+
+    const vm2 = new Vue({
+        el: '#app2',
+        data: {
+            counter: Math.floor(Math.random() * 10000)
+        }
+    });
+
+    const vm3 = new Vue({
+        el: '#app3',
+        data: {
+            counter: Math.floor(Math.random() * 10000)
+        }
+    });
+</script>
+
+</body>
+
+</html>

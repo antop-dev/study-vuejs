@@ -1,0 +1,55 @@
+<!--
+컴포넌트
+Props가 아닌 속성
+# 컴포넌트의 v-model 사용자 정의 (2.2.0+)
+
+기본적으로 컴포넌트의 v-model은 value를 보조 변수로 사용하고 input을 이벤트로 사용하지만
+체크 박스와 라디오 버튼과 같은 일부 입력 타입은 다른 목적으로 value 속성을 사용할 수 있습니다.
+model 옵션을 사용하면 다음 경우에 충돌을 피할 수 있습니다
+-->
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="https://kr.vuejs.org/js/vue.js"></script>
+</head>
+
+<body>
+
+<div id="app">
+    <my-checkbox v-model="foo" :value="something"></my-checkbox>
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    Vue.component('my-checkbox', {
+        template: '<span><input type="checkbox" :checked="checked" @click="onClick" :value="value"/>{{ value }}</span>',
+        model: {
+            prop: 'checked', // default: 'value'
+            event: 'change'  // default: 'input'
+        },
+        props: {
+            // 다른 목적을 위해 `value` prop를 사용할 수 있습니다.
+            checked: Boolean,
+            value: String
+        },
+        methods: {
+            onClick: function (event) {
+                this.$emit('change', event.target.checked);
+            }
+        }
+    });
+
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            foo: true,
+            something: 'antop'
+        }
+    });
+</script>
+
+</body>
+</html>

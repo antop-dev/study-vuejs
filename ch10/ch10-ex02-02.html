@@ -1,0 +1,41 @@
+<!--
+컴포넌트
+Props
+# camelCase vs. kebab-case
+
+HTML 속성은 대소 문자를 구분하지 않으므로 문자열이 아닌 템플릿을 사용할 때
+camelCased prop 이름에 해당하는 kebab-case(하이픈 구분)를 사용해야 합니다.
+-->
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="https://kr.vuejs.org/js/vue.js"></script>
+</head>
+
+<body>
+
+<div id="app">
+    <!-- HTML는 kebab-case -->
+    <child my-message="안녕하세요!"></child>
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    Vue.component('child', {
+        // JavaScript는 camelCase
+        // props 에서는 myMessage, my-message 둘 다 사용 가능!?
+        props: ['my-message'],
+        template: '<span>{{ myMessage }}</span>'
+    });
+
+    const vm = new Vue({
+        el: '#app'
+    });
+</script>
+
+</body>
+
+</html>

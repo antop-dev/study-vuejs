@@ -1,0 +1,41 @@
+<!--
+템플릿 안의 내용은 반드시 하나의 엘리먼트로 쌓여 있어야 한다.
+
+1. <template>...</template> (x)
+2. <span>...</span><span>....</span> (x)
+3. <div> <span>...</span><span>...</span> </div> (o)
+-->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://kr.vuejs.org/js/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <my-component></my-component>
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    Vue.component('my-component', {
+        // [Vue warn]: Error compiling template:
+        // Component template requires a root element, rather than just text.
+        // template: '<template>{{message}}</template>', (x)
+        template: '<span>{{ message }}</span>',
+        data: function () {
+            return {
+                message: 'hello'
+            }
+        }
+    });
+
+    const vm = new Vue({
+        el: '#app'
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!--
+컴포넌트
+컴포넌트 사용하기
+# DOM 템플릿 구문 분석 경고
+-->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://kr.vuejs.org/js/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <select>
+        <option is="my-option"></option>
+    </select>
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    Vue.component('my-option', {
+        template: '<option value="aaa">aaa</option>'
+    });
+
+    const vm = new Vue({
+        el: '#app'
+    });
+</script>
+
+</body>
+</html>
