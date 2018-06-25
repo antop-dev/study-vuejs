@@ -10,7 +10,7 @@ v-model은 모든 form 엘리먼트의 초기 value와 checked 그리고 selecte
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <script src="https://vuejs.org/js/vue.js"></script>
+    <script src="../js/vue.js"></script>
 </head>
 <body>
 
@@ -38,14 +38,13 @@ v-model은 모든 form 엘리먼트의 초기 value와 checked 그리고 selecte
     Vue.config.devtools = true;
 
     const vm = new Vue({
-            el: '#app',
-            data: {
-                name: '',
-                hobby: ['game', 'reading'],
-                subscribe: false
-            }
-        })
-    ;
+        el: '#app',
+        data: {
+            name: '',
+            hobby: ['game', 'reading'],
+            subscribe: false
+        }
+    });
 </script>
 
 </body>
