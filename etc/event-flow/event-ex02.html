@@ -8,12 +8,12 @@ Event Propagation
     <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", function () {
             document.querySelector('#a').addEventListener('click', function (e) {
-                // stop event
+                // stop event-flow
                 e.preventDefault();
             });
 
             document.querySelector('#f').addEventListener('submit', function (e) {
-                // stop event
+                // stop event-flow
                 e.preventDefault();
 
                 let url = this.action + '?q=' + encodeURI(this.querySelector('[name=q]').value);
