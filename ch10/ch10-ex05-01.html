@@ -10,15 +10,27 @@
 
 <head>
     <meta charset="UTF-8">
-    <script src="https://kr.vuejs.org/js/vue.js"></script>
+    <script src="../js/vue.js"></script>
 </head>
 
 <body>
 
 <div id="app">
-    <keep-alive>
+    <p>
+        <template v-for="view of views">
+            <input type="radio" v-model="currentView" :value="view" :id="view">
+            <label :for="view">{{ view }}</label>
+        </template>
+    </p>
+
+    <!--
+    어떤 것은 캐시하고 어떤 것은 캐시하고 싶지 않다면?
+    https://kr.vuejs.org/v2/api/#keep-alive
+    -->
+    <keep-alive exclude="archive">
         <component :is="currentView">
             <!-- 비활성화 된 컴포넌트는 캐시 됩니다! -->
+            <!-- 2.2.0 이상에서는 <keep-alive> 트리 안에 있는 모든 중첩 된 컴포넌트에서 activated와 deactivated가 실행됩니다. -->
         </component>
     </keep-alive>
 </div>
@@ -26,22 +38,51 @@
 <script>
     Vue.config.devtools = true;
 
+    const createdHandler = function () {
+        console.log(this.$options.name + ':' + this._uid + ' created.');
+    };
+
+    const destroyedHandler = function () {
+        console.log(this.$options.name + ':' + this._uid + ' destroyed.');
+    };
+
+    const activatedHandler = function () {
+        console.log(this.$options.name + ':' + this._uid + ' activated.');
+    };
+
+    const deactivatedHandler = function () {
+        console.log(this.$options.name + ':' + this._uid + ' deactivated.');
+    };
+
     Vue.component('home', {
-        template: '<span>home component!</span>'
+        template: '<span>home component!</span>',
+        created: createdHandler,
+        destroyed: destroyedHandler,
+        activated: activatedHandler,
+        deactivated: deactivatedHandler
     });
 
     Vue.component('posts', {
-        template: '<span>posts component!</span>'
+        template: '<span>posts component!</span>',
+        created: createdHandler,
+        destroyed: destroyedHandler,
+        activated: activatedHandler,
+        deactivated: deactivatedHandler
     });
 
     Vue.component('archive', {
-        template: '<span>archive component!</span>'
+        template: '<span>archive component!</span>',
+        created: createdHandler,
+        destroyed: destroyedHandler,
+        activated: activatedHandler,
+        deactivated: deactivatedHandler
     });
 
     const vm = new Vue({
         el: '#app',
         data: {
-            currentView: 'home'
+            currentView: 'home',
+            views: ['home', 'posts', 'archive']
         }
     });
 </script>
