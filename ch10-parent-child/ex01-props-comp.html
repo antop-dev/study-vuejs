@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="../js/vue.js"></script>
+</head>
+
+<body>
+
+<!--
+Root Vue 에서 컴포넌트들을 직접 배치한 경우 이 컴포넌트들의 부모(Parent)는 Root Vue 이다.
+이 Root 도 곧 컴포넌트다.
+-->
+<div id="app">
+    <root-component></root-component>
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    Vue.component('a-component', {
+        template: '<div>A component</div>'
+    });
+    Vue.component('b-component', {
+        template: '<div>B component<slot></slot></div>'
+    });
+    Vue.component('c-component', {
+        template: '<div>C component<slot></slot></div>'
+    });
+    Vue.component('d-component', {
+        template: '<div>D component</div>'
+    });
+    Vue.component('e-component', {
+        template: '<div>E component. v1={{v1}}, v2={{v2}}</div>',
+        /**
+         * Pass Props 목적지
+         */
+        props: ['v1', 'v2']
+    });
+
+    Vue.component('root-component', {
+        template:
+        '<div>\n' +
+        '  <a-component ref="a"></a-component>\n' +
+        '    <b-component ref="b">\n' +
+        '      <c-component ref="c">\n' +
+        '        <d-component ref="d"></d-component>\n' +
+        '        <e-component ref="e" :v1="y" :v2="z"></e-component>\n' +
+        '      </c-component>\n' +
+        '    </b-component>\n' +
+        '  </a-component>' +
+        '</div>',
+        data: function () {
+            return {
+                x: 'xxx',
+                y: 'yyy',
+                z: 'zzz'
+            }
+        }
+    });
+
+    const vm = new Vue({
+        el: '#app'
+    });
+</script>
+
+</body>
+</html>

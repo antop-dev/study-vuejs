@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="../js/vue.js"></script>
+</head>
+
+<body>
+
+<!--
+컴포넌트가 컴포넌트를 배치한 경우 각각 부모 컴포넌트 자식 컴포넌트가 된다.
+-->
+<div id="app">
+    <!-- a-component 의 부모는 Root -->
+    <a-component ref="a"></a-component>
+    <!-- b-component 의 부모는 Root -->
+    <b-component ref="b" @e-component-clicked="what"></b-component>
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    Vue.component('a-component', {
+        template: '<div>A component</div>'
+    });
+
+    // B component
+    Vue.component('b-component', {
+        template:
+        '<div>' +
+        '  B component' +
+        // c-component 의 부모는 b-component
+        '  <c-component ref="c" @e-component-clicked="what"></c-component>' +
+        '</div>',
+        methods: {
+            what: function () {
+                console.log('b-component emit "e-component-clicked" event.');
+                this.$emit('e-component-clicked');
+            }
+        }
+    });
+
+    // C component
+    Vue.component('c-component', {
+        template:
+        '<div>' +
+        '  C component' +
+        // d-component 의 부모는 c-component
+        '  <d-component ref="d"></d-component>' +
+        // e-component 의 부모는 c-component
+        '  <e-component ref="e" @e-component-clicked="what"></e-component>' +
+        '</div>',
+        methods: {
+            what: function () {
+                console.log('c-component emit "e-component-clicked" event.');
+                this.$emit('e-component-clicked');
+            }
+        }
+    });
+
+    Vue.component('d-component', {
+        template: '<div>D component</div>'
+    });
+
+    // E component
+    Vue.component('e-component', {
+        template: '<div @click="clicked">E component</div>',
+        methods: {
+            clicked: function () {
+                console.log('e-component emit "e-component-clicked" event.');
+                this.$emit('e-component-clicked');
+            }
+        }
+    });
+
+    const vm = new Vue({
+        el: '#app',
+        methods: {
+            what: function () {
+                console.log('root what!');
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="../js/vue.js"></script>
+</head>
+
+<body>
+
+<!--
+컴포넌트가 컴포넌트를 배치한 경우 각각 부모 컴포넌트 자식 컴포넌트가 된다.
+최상위 Root Vue 도 곧 부모 컴포넌트이다.
+-->
+<div id="app">
+    <!-- a-component 의 부모는 Root -->
+    <a-component ref="a"></a-component>
+    <!-- b-component 의 부모는 Root -->
+    <b-component ref="b" :a="y" :b="z"></b-component>
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    Vue.component('a-component', {
+        template: '<div>A component</div>'
+    });
+
+    // B component
+    Vue.component('b-component', {
+        template:
+        '<div>' +
+        '  B component' +
+        // c-component 의 부모는 b-component
+        '  <c-component ref="c" :ff="a" :gg="b"></c-component>' +
+        '</div>',
+        props: ['a', 'b']
+    });
+
+    // C component
+    Vue.component('c-component', {
+        template:
+        '<div>' +
+        '  C component' +
+        // d-component 의 부모는 c-component
+        '  <d-component ref="d"></d-component>' +
+        // e-component 의 부모는 c-component
+        '  <e-component ref="e" :v1="ff" :v2="gg"></e-component>' +
+        '</div>',
+        props: ['ff', 'gg']
+    });
+
+    Vue.component('d-component', {
+        template: '<div>D component</div>'
+    });
+
+    // E component
+    Vue.component('e-component', {
+        template: '<div>E component. v1={{v1}}, v2={{v2}}</div>',
+        /**
+         * Pass Props 목적지
+         */
+        props: ['v1', 'v2']
+    });
+
+    const vm = new Vue({
+        el: '#app',
+        data: function () {
+            return {
+                x: 'xxx',
+                y: 'yyy',
+                z: 'zzz'
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

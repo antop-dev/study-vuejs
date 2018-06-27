@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="../js/vue.js"></script>
+</head>
+
+<body>
+
+<!--
+Root Vue 에서 컴포넌트들을 직접 배치한 경우 이 컴포넌트들의 부모(Parent)는 Root Vue 이다.
+-->
+<div id="app">
+    <a-component ref="a"></a-component>
+    <b-component ref="b">
+        <c-component ref="c">
+            <d-component ref="d"></d-component>
+            <e-component ref="e" @e-component-clicked="what"></e-component>
+        </c-component>
+    </b-component>
+
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    Vue.component('a-component', {
+        template: '<div>A component</div>'
+    });
+    Vue.component('b-component', {
+        template: '<div>B component<slot></slot></div>'
+    });
+    Vue.component('c-component', {
+        template: '<div>C component<slot></slot></div>'
+    });
+    Vue.component('d-component', {
+        template: '<div>D component</div>'
+    });
+    Vue.component('e-component', {
+        template: '<div @click="clicked">E component</div>',
+        methods: {
+            clicked: function () {
+                console.log('e-component emit "e-component-clicked" event.');
+                this.$emit('e-component-clicked');
+            }
+        }
+    });
+
+    const vm = new Vue({
+        el: '#app',
+        methods: {
+            what: function () {
+                console.log('!');
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
