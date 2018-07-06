@@ -1,0 +1,76 @@
+<!--
+트랜지션 & 애니메이션
+트랜지션 재사용
+
+예, Vue의 트랜지션도 데이터 기반입니다! 동적 변환의 가장 기본적인 예제는 name 속성을 동적 속성에 바인딩합니다.
+-->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <script src="../js/vue.js"></script>
+</head>
+
+<body>
+
+<div id="app">
+    <p>
+        <input type="radio" name="name" id="fade" value="fade" v-model="transitionName" /><label for="fade">fade</label>
+        <input type="radio" name="name" id="bounce" value="bounce" v-model="transitionName" /><label for="bounce">bounce</label>
+    </p>
+
+    <button @click="show = !show">Toggle</button>
+
+    <transition :name="transitionName">
+        <p v-if="show">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris facilisis enim libero, at lacinia
+            diam fermentum id. Pellentesque habitant morbi tristique senectus et netus.
+        </p>
+    </transition>
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            transitionName : 'fade',
+            show: false
+        }
+    });
+</script>
+
+<style type="text/css">
+    .fade-enter-active, .fade-leave-active {
+        transition: opacity .5s;
+    }
+
+    .fade-enter, .fade-leave-to {
+        opacity: 0;
+    }
+
+    .bounce-enter-active {
+        animation: bounce-in .5s;
+    }
+
+    .bounce-leave-active {
+        animation: bounce-in .5s reverse;
+    }
+
+    @keyframes bounce-in {
+        0% {
+            transform: scale(0);
+        }
+        50% {
+            transform: scale(1.5);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+</style>
+
+</body>
+
+</html>

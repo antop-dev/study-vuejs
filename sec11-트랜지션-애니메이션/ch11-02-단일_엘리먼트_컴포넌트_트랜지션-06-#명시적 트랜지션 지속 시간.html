@@ -1,0 +1,90 @@
+<!--
+트랜지션 & 애니메이션
+단일 엘리먼트 / 컴포넌트 트랜지션
+# 명시적 트랜지션 지속 시간
+
+대부분의 경우 Vue는 트랜지션이 완료를 자동으로 감지할 수 있습니다.
+기본적으로 Vue는 루트 트랜지션 엘리먼트에서 첫 번째 transitionend 또는 animationend 이벤트를 기다립니다.
+그러나 이것은 항상 이상적인 것은 아닙니다.
+예를 들어, 중첩 된 내부 엘리먼트가 루트 트랜지션 엘리먼트보다 지연된 트랜지션 또는 더 긴 트랜지션 기간을 갖는 다른 엘리먼트와 함께 진행하는 트랜지션 시퀀스를 가질 수 있습니다.
+
+이 경우, <transition> 컴포넌트에 duration 속성을 사용하여 명시적인 트랜지션 지속 시간(밀리 초)을 지정할 수 있습니다.
+
+* 진입과 진출 기간에도 명시적인 값을 지정할 수 있습니다.
+{ enter : 1000, leave: 800 }
+
+* 변수 바인딩을 사용해도 된다.
+-->
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="../js/vue.js"></script>
+</head>
+
+<body>
+
+<div id="app">
+    <button @click="show = !show">
+        Toggle
+    </button>
+    <transition name="bounce" :duration="duration" @after-enter="afterEnter" @after-leave="afterLeave">
+        <p v-if="show" @animationend="animationEnd">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris facilisis enim libero, at lacinia
+            diam fermentum id. Pellentesque habitant morbi tristique senectus et netus.
+        </p>
+    </transition>
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            show: true,
+            // 변수 바인딩을 사용해도 된다.
+            duration : {
+                enter : 3000,
+                leave : 4000
+            }
+        },
+        methods: {
+            animationEnd: function () {
+                console.log('css animation end.');
+            },
+            afterEnter: function (el) {
+                console.log('vue transition after enter.');
+            },
+            afterLeave: function (el) {
+                console.log('vue transition after leave.');
+            }
+        }
+    });
+</script>
+
+<style type="text/css">
+    .bounce-enter-active {
+        animation: bounce-in .5s;
+    }
+
+    .bounce-leave-active {
+        animation: bounce-in .5s reverse;
+    }
+
+    @keyframes bounce-in {
+        0% {
+            transform: scale(0);
+        }
+        50% {
+            transform: scale(1.5);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+</style>
+
+</body>
+</html>

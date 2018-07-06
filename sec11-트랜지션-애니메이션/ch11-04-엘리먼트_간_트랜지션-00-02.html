@@ -1,0 +1,69 @@
+<!--
+트랜지션 & 애니메이션
+엘리먼트 간 트랜지션
+
+같은 태그 이름 을 가진 엘리먼트 사이를 트랜지션할 때, Vue에 고유 한 key 속성을 부여함으로써 별개의 엘리먼트임을 말해야합니다.
+그렇지 않으면 Vue의 컴파일러는 효율성을 위해 엘리먼트의 내용만 바꿉니다.
+기술적으로 불필요한 경우 라하더라도 여러 항목을 항상 <transition> 컴포넌트에 키핑하는 것이 좋습니다.
+-->
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="../js/vue.js"></script>
+</head>
+
+<body>
+
+<div id="app">
+    <p>
+        <button type="button" @click="isEditing = !isEditing">change</button>
+    </p>
+
+    <p>not using key property</p>
+    <transition>
+        <!-- 엘리먼트 재사용으로 인해 트랜지션 효과가 일어나지 않는다. -->
+        <button v-if="isEditing">Save</button>
+        <button v-else>Edit</button>
+    </transition>
+
+    <p>using key property 1/2</p>
+    <transition>
+        <button v-if="isEditing" key="save">Save</button>
+        <button v-else key="edit">Edit</button>
+    </transition>
+
+    <!--
+    이러한 경우,key 속성을 사용하여 같은 엘리먼트의 여러 상태 사이를 트랜지션 할 수 있습니다.
+    v-if 와 v-else 대신에 위의 예제를 다음과 같이 재 작성할 수 있습니다:
+    -->
+    <p>using key property 2/2</p>
+    <transition>
+        <button :key="isEditing">{{ isEditing ? 'Save' : 'Edit' }}</button>
+    </transition>
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    const vm= new Vue({
+        el: '#app',
+        data: {
+            isEditing: true
+        }
+    });
+</script>
+
+<style type="text/css">
+    .v-enter-active, .v-leave-active {
+        transition: opacity 1s;
+    }
+
+    .v-enter, .v-leave-to {
+        opacity: 0;
+    }
+</style>
+
+</body>
+</html>
