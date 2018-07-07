@@ -1,0 +1,46 @@
+<!--
+보간법(Interpolation)
+# JavaScript 표현식 사용
+-->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <!--
+    Vue.js는 모든 데이터 바인딩 내에서 JavaScript 표현식의 모든 기능을 지원합니다.
+    -->
+    <p>{{ number + 1 }}</p>
+    <p>{{ ok ? 'YES' : 'NO' }}</p>
+    <p>{{ message.split('').reverse().join('') }}</p>
+
+    <!--
+    이 표현식은 Vue 인스턴스 데이터 범위 내에서 JavaScript로 계산됩니다.
+    한가지 제한사항은 각 바인딩에 하나의 단일 표현식만 포함될 수 있으므로 아래처럼 작성하면 안됩니다
+    -->
+
+    <!-- 아래는 구문입니다, 표현식이 아닙니다. -->
+    <p>{{ var a = 1 }}</p>
+    <!-- 조건문은 작동하지 않습니다. 삼항 연산자를 사용해야 합니다. -->
+    <p>{{ if (ok) { return message } }}</p>
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            number: 111,
+            ok: true,
+            message: 'Hello Vue.js!'
+        }
+    });
+</script>
+
+</body>
+</html>

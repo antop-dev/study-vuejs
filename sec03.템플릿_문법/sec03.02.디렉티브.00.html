@@ -1,0 +1,33 @@
+<!--
+디렉티브
+-->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <!--
+    디렉티브는 v- 접두사가 있는 특수 속성입니다.
+    디렉티브 속성 값은 단일 JavaScript 표현식이 됩니다. (나중에 설명할 v-for는 예외입니다.)
+    디렉티브의 역할은 표현식의 값이 변경될 때 사이드이펙트를 반응적으로 DOM에 적용하는 것 입니다.
+    -->
+    <p v-if="seen">이제 나를 볼 수 있어요</p>
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            seen: true
+        }
+    });
+</script>
+
+</body>
+</html>

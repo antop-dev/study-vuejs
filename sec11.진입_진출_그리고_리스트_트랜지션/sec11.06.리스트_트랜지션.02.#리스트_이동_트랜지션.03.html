@@ -1,0 +1,87 @@
+<!--
+트랜지션 & 애니메이션
+리스트 트랜지션
+# 리스트 이동 트랜지션
+
+https://jsfiddle.net/chrisvfritz/sLrhk1bc/
+-->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <script src="../js/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.14.1/lodash.min.js"></script>
+    <!-- https://github.com/robatron/sudoku.js -->
+    <script src="https://rawgit.com/robatron/sudoku.js/master/sudoku.js"></script>
+    <!-- https://github.com/broofa/node-uuid -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/node-uuid/1.4.8/uuid.min.js"></script>
+</head>
+
+<body>
+
+<div id="app">
+    <strong>Lazy Sudoku</strong>
+    <p>Keep hitting the shuffle button until you win.</p>
+    <button @click="shuffle">Shuffle</button>
+
+    <transition-group name="sudoku" tag="div" class="sudoku-container">
+        <div v-for="item of items" class="cell" :key="item.id">{{ item.n }}</div>
+    </transition-group>
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    new Vue({
+        el: '#app',
+        data: {
+            items: []
+        },
+        methods: {
+            shuffle: function () {
+                this.items = _.shuffle(this.items);
+            }
+        },
+        created: function () {
+            let generate = sudoku.generate("easy", false);
+            let solve = sudoku.solve(generate);
+            const split = solve.split("")
+
+            for (let i = 0; i < split.length; i++) {
+                this.items[i] = {
+                    id: i,
+                    n: Number(split[i])
+                };
+            }
+        }
+    });
+</script>
+
+<style type="text/css">
+    .sudoku-container {
+        display: flex;
+        flex-wrap: wrap;
+        width: 238px;
+        margin-top: 10px;
+    }
+
+    .cell {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        width: 25px;
+        height: 25px;
+        border: 1px solid #aaa;
+        margin-right: -1px;
+        margin-bottom: -1px;
+    }
+
+    .sudoku-move {
+        transition: transform 1s;
+    }
+</style>
+
+</body>
+
+
+</html>

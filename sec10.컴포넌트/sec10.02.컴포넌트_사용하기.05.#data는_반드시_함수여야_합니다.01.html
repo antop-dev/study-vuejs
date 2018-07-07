@@ -1,0 +1,50 @@
+<!--
+컴포넌트
+컴포넌트 사용하기
+# data 는 반드시 함수여야 합니다.
+
+Vue 생성자에 사용할 수 있는 대부분의 옵션은 컴포넌트에서 사용할 수 있습니다.
+한가지 특별한 경우가 있습니다. data 는 함수여야 합니다.
+-->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <!-- 개발용 -->
+    <script src="../js/vue.js"></script>
+    <!-- 배포용 -->
+    <!--<script src="https://kr.vuejs.org/js/vue.min.js"></script>-->
+</head>
+<body>
+
+<div id="app">
+    <my-component></my-component>
+    <!-- 개발용
+    [Vue warn]: The "data" option should be a function that returns a per-instance value in component definitions.
+    [Vue warn]: Property or method "message" is not defined on the instance but referenced during render.
+                Make sure that this property is reactive, either in the data option, or for class-based components, by initializing the property.
+                See: https://vuejs.org/v2/guide/reactivity.html#Declaring-Reactive-Properties.
+    -->
+
+    <!-- 배포용
+    ReferenceError: message is not defined
+    -->
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    Vue.component('my-component', {
+        template: '<span>{{ message }}</span>',
+        data: {
+            message: 'hello'
+        }
+    });
+
+    const vm = new Vue({
+        el: '#app'
+    });
+</script>
+
+</body>
+</html>

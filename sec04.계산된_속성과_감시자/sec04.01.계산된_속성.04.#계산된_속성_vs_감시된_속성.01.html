@@ -1,0 +1,39 @@
+<!--
+계산된 속성
+# 계산된 속성 vs 감시된 속성
+-->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+
+<div id="demo">{{ fullName }}</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    // Vue는 Vue 인스턴스의 데이터 변경을 관찰하고 이에 반응하는 보다 일반적인 속성 감시 방법을 제공합니다.
+    // 다른 데이터 기반으로 변경할 필요가 있는 데이터가 있는 경우, 특히 AngularJS를 사용하던 경우 watch를 남용하는 경우가 있습니다.
+    var vm = new Vue({
+        el: '#demo',
+        data: {
+            firstName: 'Foo',
+            lastName: 'Bar',
+            fullName: 'Foo Bar'
+        },
+        watch: {
+            firstName: function (val) {
+                this.fullName = val + ' ' + this.lastName;
+            },
+            lastName: function (val) {
+                this.fullName = this.firstName + ' ' + val;
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

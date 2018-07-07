@@ -1,0 +1,30 @@
+<!--
+속성과 메소드
+-->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+
+<script>
+    // 어떤 속성이 나중에 필요하다는 것을 알고 있으며,
+    // 빈 값이거나 존재하지 않은 상태로 시작한다면 아래와 같이 초기값을 지정할 필요가 있습니다.
+    var data = {
+        a: 1,
+        b: null
+    };
+
+    var vm = new Vue({
+        data: data
+    });
+
+    vm.b = 'hi';
+    console.log('vm.b = ' + vm.b);
+    console.log('data.b = ' + data.b);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!--
+인라인 스타일 바인딩
+# 객체 구문
+-->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <!-- 다시, 객체 구문은 종종 객체를 반환하는 계산된 속성과 함께 사용합니다. -->
+    <div v-bind:style="styleObject">인라인 스타일 바인딩 - &#35; 객체 구문</div>
+    <!-- <div style="color: red; font-size: 13px;"></div> -->
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            isActive: true,
+            error : null
+        },
+        computed: {
+            styleObject: function () {
+                return {
+                    fontSize: this.isActive ? '13px' : null,
+                    color: this.error && this.error.type === 'fatal' ? 'red' : null
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

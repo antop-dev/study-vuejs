@@ -1,0 +1,49 @@
+<!--
+약어
+
+v- 접두사는 템플릿의 Vue 특정 속성을 식별하기 위한 시각적인 신호 역할을 합니다.
+이 기능은 Vue.js를 사용하여 기존의 마크업에 동적인 동작을 적용할 때 유용하지만
+일부 자주 사용되는 디렉티브에 대해 너무 장황하다고 느껴질 수 있습니다.
+동시에 Vue.js가 모든 템플릿을 관리하는 SPA를 만들 때 v- 접두어의 필요성이 떨어집니다.
+가장 자주 사용되는 두개의 디렉티브인 v-bind와 v-on에 대해 특별한 약어를 제공합니다.
+-->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <!-- 약어 -->
+    <p><a :href="url">link</a></p>
+    <!-- 약어 -->
+    <p><a @click="doSomething">click</a></p>
+
+    <!--
+    이들은 일반적인 HTML과 조금 다르게 보일 수 있습니다.
+    하지만 :와 @는 속성 이름에 유효한 문자이며 Vue.js를 지원하는 모든 브라우저는 올바르게 구문 분석을 할 수 있습니다.
+    또한 최종 렌더링 된 마크업에는 나타나지 않습니다.
+    약어는 완전히 선택사항이지만 나중에 익숙해지면 편할 것 입니다.
+    -->
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            url: 'http://www.google.com'
+        },
+        methods: {
+            doSomething: function() {
+                alert('clicked');
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
