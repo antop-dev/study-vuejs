@@ -18,11 +18,12 @@
 <div id="app">
     <button @click="show = !show">Toggle</button>
 
-    <transition name="fade" appear
-                v-on:before-appear="customBeforeAppearHook"
-                v-on:appear="customAppearHook"
-                v-on:after-appear="customAfterAppearHook"
-                v-on:appear-cancelled="customAppearCancelledHook">
+    <transition name="fade" appear :css="false"
+                @before-appear="customBeforeAppearHook"
+                @appear="customAppearHook"
+                @after-appear="customAfterAppearHook"
+                @appear-cancelled="customAppearCancelledHook"
+    >
         <p v-if="show">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris facilisis enim libero, at lacinia
             diam fermentum id. Pellentesque habitant morbi tristique senectus et netus.</p>
     </transition>

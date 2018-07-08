@@ -20,10 +20,23 @@
 
 <div id="app">
     <button @click="show = !show">Toggle</button>
-    <transition v-on:before-enter="beforeEnter" v-on:enter="enter" v-on:leave="leave"
-                v-bind:css="false"
-    >
-        <p v-if="show">Demo</p>
+
+    <!--
+    자바스크립트 훅 사용시 #[사용자 지정 트랜지션 클래스] 떄와 마찬가지로 #[트랜지션 클래스]가 자동으로 동작하게 된다.
+
+    아래 설정이면 name 속성값이 없기 때문에 v- 트랜지션 클래스가 추가되게 된다.
+    * enter: <p style="..." class="v-enter-active velocity-animating v-enter-to">...</p>
+    * leave: <p style="..." class="v-leave-active velocity-animating v-leave-to">...</p>
+    
+    :css="false" 속성을 사용하게 되면 #[트랜지션 클래스]가 작동하지 않게 할 수 있다.
+    * enter: <p style="..." class="velocity-animating">...</p>
+    * leave: <p style="..." class="velocity-animating">...</p>
+    -->
+    <transition @before-enter="beforeEnter" @enter="enter" @leave="leave" :css="false">
+        <p v-if="show">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris facilisis enim libero, at lacinia
+            diam fermentum id. Pellentesque habitant morbi tristique senectus et netus.
+        </p>
     </transition>
 </div>
 
@@ -37,7 +50,7 @@
         },
         methods: {
             beforeEnter: function (el) {
-                el.style.opacity = 0
+                el.style.opacity = 0;
             },
             enter: function (el, done) {
                 Velocity(el, {
