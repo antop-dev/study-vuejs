@@ -1,0 +1,47 @@
+<!--
+재사용 & 컴포지션
+사용자 지정 디렉티브
+시작
+
+지시어를 로컬로 등록하기 위해서 컴포넌트는 directives 옵션을 허용합니다.
+-->
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="../js/vue.js"></script>
+</head>
+
+<body>
+
+<div id="app">
+    <div>
+        <first-input />
+    </div>
+    <!-- [Vue warn]: Failed to resolve directive: focus -->
+    <div><input type="text" v-focus/></div>
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    Vue.component('first-input', {
+        template: '<input type="text" v-focus />',
+        directives: {
+            focus: {
+                // 디렉티브 정의
+                inserted: function (el) {
+                    el.focus();
+                }
+            }
+        }
+    });
+
+    const vm = new Vue({
+        el: '#app'
+    });
+</script>
+
+</body>
+</html>
