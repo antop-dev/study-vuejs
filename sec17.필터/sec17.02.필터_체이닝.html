@@ -1,0 +1,51 @@
+<!--
+재사용 & 컴포지션
+> 필터
+
+필터의 함수는 항상 첫 번째 전달인자로 표현식의 값(이전 체이닝의 결과)을 받습니다.
+-->
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="../js/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
+</head>
+
+<body>
+
+<div id="app">
+    <div>
+        <input type="text" v-model="message"/>
+        <!-- 중괄호 보간법 -->
+        <p>result: {{ message | filterA | filterB }}</p>
+    </div>
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            message: 'hello! antop.'
+        },
+        filters: {
+            filterA: function (value) {
+                let result = _.kebabCase(value);
+                console.log('filterA "' + value + '" -> "' + result + '"');
+                return result;
+            },
+            filterB: function (value) {
+                let result = _.capitalize(value);
+                console.log('filterB "' + value + '" -> "' + result + '"');
+                return result;
+            }
+        }
+    });
+</script>
+
+
+</body>
+</html>
