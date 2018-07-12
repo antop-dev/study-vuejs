@@ -1,0 +1,62 @@
+<!--
+재사용 & 컴포지션
+> 플러그인
+ > 플러그인 작성
+
+플러그인은 일반적으로 전역 수준 기능을 Vue에 추가합니다.
+플러그인에는 엄격하게 정의된 범위는 없습니다. 일반적으로 작성할 수있는 플러그인에는 여러 유형이 있습니다.
+
+Vue.js 플러그인은install 메소드를 노출해야합니다.
+이 메소드는 첫 번째 인자로 Vue 생성자와 함께 가능한 옵션과 함께 호출 될 것입니다.
+-->
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="../js/vue.js"></script>
+</head>
+
+<body>
+
+<div id="app">
+
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    MyPlugin.install = function (Vue, options) {
+        // 1. 전역 메소드 또는 속성 추가
+        Vue.myGlobalMethod = function () {
+            // 필요한 로직 ...
+        }
+
+        // 2. 전역 에셋 추가
+        Vue.directive('my-directive', {
+            bind(el, binding, vnode, oldVnode) {
+                // 필요한 로직 ...
+            }
+        });
+
+        // 3. 컴포넌트 옵션 주입
+        Vue.mixin({
+            created: function () {
+                // 필요한 로직 ...
+            }
+        });
+
+        // 4. 인스턴스 메소드 추가
+        Vue.prototype.$myMethod = function (options) {
+            // 필요한 로직 ...
+        }
+    };
+
+    const vm = new Vue({
+        el: '#app'
+    });
+</script>
+
+
+</body>
+</html>
