@@ -1,0 +1,45 @@
+<!--
+재사용 & 컴포지션
+믹스인
+기초
+
+Mixins는 Vue 컴포넌트에 재사용 가능한 기능을 배포하는 유연한 방법입니다.
+mixin 객체는 모든 구성 요소 옵션을 포함할 수 있습니다.
+컴포넌트에 mixin을 사용하면 해당 mixin의 모든 옵션이 컴포넌트의 고유 옵션에 "혼합"됩니다.
+-->
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="../js/vue.js"></script>
+</head>
+
+<body>
+
+<script>
+    Vue.config.devtools = true;
+
+    // mixin 객체 생성
+    const myMixin = {
+        created: function () {
+            this.hello()
+        },
+        methods: {
+            hello: function () {
+                console.log('hello from mixin!')
+            }
+        }
+    };
+
+    // mixin을 사용할 컴포넌트 정의
+    const Component = Vue.extend({
+        mixins: [myMixin]
+    });
+
+    const component = new Component();
+    // => "hello from mixin!"
+</script>
+
+</body>
+</html>

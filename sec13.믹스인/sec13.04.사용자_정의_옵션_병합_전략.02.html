@@ -1,0 +1,82 @@
+<!--
+재사용 & 컴포지션
+믹스인
+사용자 정의 옵션 병합 전략
+
+대부분의 객체 기반 옵션에서 methods에서 사용한 것과 같은 전략을 간단하게 사용할 수 있습니다.
+
+activated
+beforeCreate
+beforeDestroy
+beforeMount
+beforeUpdate
+components
+computed
+created
+data
+deactivated
+destroyed
+directives
+el
+errorCaptured
+filters
+inject
+methods
+mounted
+myOption
+props
+propsData
+provide
+updated
+watch
+-->
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="../js/vue.js"></script>
+</head>
+
+<body>
+
+<script>
+    Vue.config.devtools = true;
+
+    // console.log(Vue.config.optionMergeStrategies);
+    // 이미 Vue 에 정의된 전략중 methods 병합 전략을 그대로 사용.
+    Vue.config.optionMergeStrategies.myOption = Vue.config.optionMergeStrategies.methods;
+
+    Vue.mixin({
+        myOption: {
+            a: function () {
+                console.log('a is 1');
+            },
+            b: function () {
+                console.log('b is 2');
+            }
+        }
+    });
+
+    const vm = new Vue({
+        myOption: {
+            a: function () {
+                console.log('a is 3');
+            },
+            b: function () {
+                console.log('b is 4');
+            }
+        }
+    });
+
+    console.log('--');
+    console.log('created vue instance.');
+
+    vm.$options.myOption.a();
+    vm.$options.myOption.b();
+
+    // => "hello!"
+</script>
+
+</body>
+</html>
