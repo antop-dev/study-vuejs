@@ -1,0 +1,49 @@
+<!--
+재사용 & 컴포지션
+> Render Functions & JSX
+ > createElement 전달인자
+   # 제약 사항
+
+VNodes는 고유해야 합니다
+컴포넌트 트리의 모든 VNode는 고유 해야 합니다. 아래 예제는 다음 렌더링 함수가 유효하지 않음을 의미합니다.
+-->
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="../js/vue.js"></script>
+</head>
+
+<body>
+
+<div id="app">
+    <my-comp/>
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    Vue.component('my-comp', {
+        render: function (createElement) {
+            const myParagraphVNode = createElement('p', 'hi');
+
+            myParagraphVNode.tag = 'div';
+
+            // 이런 - Vnode가 중복입니다!
+            const vnode = createElement('div', [myParagraphVNode, myParagraphVNode]);
+
+            console.log('vnode:', vnode);
+            return vnode;
+        }
+    });
+
+    const vm = new Vue({
+        el: '#app'
+    });
+
+    console.log(vm);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!--
+재사용 & 컴포지션
+> Render Functions & JSX
+ > 템플릿 컴파일
+
+Vue의 템플릿이 실제로 함수를 렌더링 하기 위해 컴파일 되는 것을 알고 싶을 것입니다.
+이는 일반적으로 알 필요가 없는 내부 구현 사항이지만 특정 템플릿 기능을 컴파일 하는 방법을 보고 싶다면 흥미로울 수 있습니다.
+다음은 Vue.compile을 사용해 템플릿 문자열을 실시간 컴파일 하는데 사용되는 데모 입니다
+-->
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+
+    <script src="../js/vue.js"></script>
+    <!-- https://highlightjs.org/ -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/railscasts.min.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+</head>
+
+<body>
+
+<div id="app">
+    <h4>code</h4>
+    <code-editor v-model="text"></code-editor>
+    <h4>render:</h4>
+    <highlight :code="compile.render"></highlight>
+    <h4>staticRenderFns:</h4>
+    <highlight :code="compile.staticRenderFns"></highlight>
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    /**
+     * 탭 들여쓰기 기능이 들어간 textarea 컴포넌트
+     */
+    Vue.component('code-editor', {
+        template: '<textarea :value="value" @input="input" @keydown.9.exact.prevent="onTab"></textarea>',
+        props: ['value'],
+        methods: {
+            input: function (event) {
+                this.$emit('input', event.target.value);
+            },
+            /**
+             * 탭키 눌렀을 때 2칸 공백 추가
+             * @param event
+             */
+            onTab: function (event) {
+                let o = event.target;
+                let s = o.selectionStart;
+                let e = o.selectionEnd;
+
+                o.value = o.value.substring(0, s) + "  " + o.value.substr(e);
+                o.setSelectionRange(s + 2, s + 2);
+            }
+        }
+    });
+
+    /**
+     * highlightjs 를 워랩한 컴포넌트
+     */
+    Vue.component('highlight', {
+        template:
+        '<pre>' +
+        '   <code refs="code" class="javascript">{{code}}</code>' +
+        '</pre>',
+        props: ['code'],
+        methods: {
+            highlight: function (code) {
+                let pre = this.$el.children[0];
+
+                pre.innerText = code;
+                hljs.highlightBlock(pre);
+            }
+        },
+        watch: {
+            code: function (newValue) {
+                this.highlight(newValue);
+            }
+        },
+        mounted: function () {
+            this.highlight(this.code);
+        }
+    });
+
+    const vm = new Vue({
+        el: '#app',
+        computed: {
+            compile: function () {
+                return Vue.compile(this.text);
+            }
+        },
+        data: {
+            text: '<div>\n' +
+            '  <header>\n' +
+            '    <h1>I\'m a template!</h1>\n' +
+            '  </header>\n' +
+            '  <p v-if="message">\n' +
+            '    {{ message }}\n' +
+            '  </p>\n' +
+            '  <p v-else>\n' +
+            '    No message.\n' +
+            '  </p>\n' +
+            '</div>',
+            message: 'Hello! Antop!'
+        }
+    });
+
+    console.log('vm instance:', vm);
+</script>
+
+<style>
+    #app {
+        margin: 0 auto;
+        width: 500px;
+    }
+
+    #app textarea {
+        width: 100%;
+        height: 200px;
+        resize: vertical;
+    }
+
+    #app pre code {
+        width: 100%;
+        height: 150px;
+    }
+</style>
+
+</body>
+</html>
+

@@ -1,0 +1,49 @@
+<!--
+재사용 & 컴포지션
+> Render Functions & JSX
+ > 기본
+
+템플릿은 대부분의 컴포넌트에서 훌륭하게 작동하지만 분명하지는 않습니다.
+이제 render 함수로 다시 작성해 봅니다.
+-->
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="../js/vue.js"></script>
+</head>
+
+<body>
+
+<div id="app">
+    <anchored-heading :level="1">Hello world!</anchored-heading>
+    <anchored-heading :level="3">Hello Vue.js</anchored-heading>
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    Vue.component('anchored-heading', {
+        render: function (createElement) {
+            return createElement(
+                'h' + this.level,   // 태그 이름
+                this.$slots.default // 자식의 배열
+            );
+        },
+        props: {
+            level: {
+                type: Number,
+                required: true
+            }
+        }
+    });
+
+    const vm = new Vue({
+        el: '#app'
+    });
+</script>
+
+
+</body>
+</html>
