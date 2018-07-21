@@ -1,0 +1,54 @@
+<!--
+재사용 & 컴포지션
+> Render Functions & JSX
+ > 템플릿 기능을 일반 JavaScript로 변경하기
+   # v-model
+
+렌더 함수에는 직접적으로 v-model에 대응되는 것이 없습니다. 직접 구현해야합니다.
+-->
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="https://kr.vuejs.org/js/vue.js"></script>
+</head>
+
+<body>
+
+<div id="app">
+    <my-comp v-model="v"/>
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    Vue.component('my-comp', {
+        props: ['value'],
+        render: function (createElement) {
+            var self = this;
+
+            return createElement('input', {
+                domProps: {
+                    value: self.value
+                },
+                on: {
+                    input: function (event) {
+                        self.value = event.target.value
+                        self.$emit('input', event.target.value)
+                    }
+                }
+            });
+        }
+    });
+
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            v: 'antop'
+        }
+    });
+</script>
+
+</body>
+</html>

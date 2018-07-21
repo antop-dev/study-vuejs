@@ -1,0 +1,72 @@
+<!--
+재사용 & 컴포지션
+> Render Functions & JSX
+ > 템플릿 기능을 일반 JavaScript로 변경하기
+   # Slots
+
+범위 함수 슬롯을 렌더링 함수를 사용하여 하위 컴포넌트로 전달하려면 VNode 데이터에서 scopedSlots 필드를 사용하십시오.
+-->
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="https://kr.vuejs.org/js/vue.js"></script>
+</head>
+
+<body>
+
+<div id="app">
+    <app-layout>
+        <h1 slot="header">여기에 페이지 제목이 위치합니다</h1>
+
+        <p>메인 컨텐츠의 단락입니다.</p>
+        <p>하나 더 있습니다.</p>
+
+        <p slot="footer">여기에 연락처 정보입니다.</p>
+    </app-layout>
+</div>
+
+
+<script>
+    Vue.config.devtools = true;
+
+    // https://kr.vuejs.org/v2/guide/components.html#범위를 가지는 슬롯
+    Vue.component('child', {
+        template: '<div class="child">\n' +
+        '  <slot base-style="width:200px; height:200px;" text="hello from child"></slot>\n' +
+        '</div>'
+    });
+
+    Vue.component('app-layout', {
+        render(createElement) {
+            const vnode = createElement('child', {
+                // 데이터 객체의 `scopedSlots`를 다음 형식으로 전달합니다
+                // { name: props => VNode | Array<VNode> }
+                scopedSlots: {
+                    default: function (props) {
+                        return createElement('span', {
+                            attrs: {
+                                style: 'background-color: dodgerblue;'
+                            },
+                            style: props.baseStyle
+                        });
+                    }
+                }
+            });
+
+            console.log('vnode:', vnode);
+            return vnode;
+        }
+    });
+
+    const vm = new Vue({
+        el: '#app'
+    });
+
+    console.log('vm instance:', vm);
+</script>
+
+</body>
+</html>
+

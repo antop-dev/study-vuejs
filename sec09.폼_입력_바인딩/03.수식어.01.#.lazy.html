@@ -1,0 +1,37 @@
+<!--
+폼 입력 바인딩
+수식어
+# .lazy
+
+기본적으로, v-model은 각 입력 이벤트 후 입력과 데이터를 동기화 합니다. (단 앞에서 설명한 IME 구성은 제외됩니다.)
+.lazy 수식어를 추가하여 change 이벤트 이후에 동기화 할 수 있습니다.
+-->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://kr.vuejs.org/js/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <!-- "input" 대신 "change" 이후에 동기화 됩니다. -->
+    <!--
+    <input :.lazy="msg"/> (x)
+    -->
+    <input v-model.lazy="msg"/>
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            msg: 'message'
+        }
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!--
+컴포넌트
+Props
+# Prop 검증
+
+컴포넌트가 받는 중인 prop에 대한 요구사항을 지정할 수 있습니다
+ 요구사항이 충족 되지 않으면 Vue에서 경고를 내보냅니다
+  이 기능은 다른 사용자가 사용할 컴포넌트를 제작할 때 특히 유용합니다.
+
+props를 문자열 배열로 정의하는 대신 유효성 검사 요구사항이 있는 객체를 사용할 수 있습니다.
+-->
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="https://kr.vuejs.org/js/vue.js"></script>
+</head>
+
+<body>
+<div id="app">
+    <example v-bind="input"></example>
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    Vue.component('example', {
+        template: '<div>'
+        + '<p>prop-a: {{ propA }}</p>'
+        + '<p>prop-b: {{ propB }}</p>'
+        + '<p>prop-c: {{ propC }}</p>'
+        + '<p>prop-d: {{ propD }}</p>'
+        + '<p>prop-e: {{ propE }}</p>'
+        + '<p>prop-f: {{ propF }}</p>'
+        + '</div>',
+        props: {
+            // 기본 타입 확인 (`null` 은 어떤 타입이든 가능하다는 뜻입니다)
+            propA: Number,
+            // 여러개의 가능한 타입
+            propB: [String, Number],
+            // 문자열이며 꼭 필요합니다
+            propC: {
+                type: String,
+                required: true
+            },
+            // 숫자이며 기본 값을 가집니다
+            propD: {
+                type: Number,
+                default: 100
+            },
+            // 객체/배열의 기본값은 팩토리 함수에서 반환 되어야 합니다.
+            propE: {
+                type: Object,
+                default: function () {
+                    return {message: 'hello'};
+                }
+            },
+            // 사용자 정의 유효성 검사 가능
+            propF: {
+                validator: function (value) {
+                    return value > 10;
+                }
+            }
+        }
+    });
+
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            input: {
+                propA: null,
+                propB: 1234,
+                propC: 111, // [Vue warn]: Invalid prop: type check failed for prop "propC". Expected String, got Number.
+                // not defined d
+                propE: 'anything', // [Vue warn]: Invalid prop: type check failed for prop "propE". Expected Object, got String.
+                propF: 1 // [Vue warn]: Invalid prop: custom validator check failed for prop "propF".
+            }
+        }
+    });
+</script>
+
+</body>
+
+</html>

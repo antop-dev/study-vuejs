@@ -1,0 +1,64 @@
+<!--
+컴포넌트
+Props가 아닌 속성
+
+Props가 아닌 속성은 컴포넌트로 전달되지만 해당 props는 정의되지 않은 속성입니다.
+
+명시적으로 정의된 props는 하위 컴포넌트에 정보를 전달하는데 적절하지만 컴포넌트 라이브러리를 만드는 경우 컴포넌트가 사용될 수있는 상황을 항상 예측할 수는 없습니다.
+이것이 컴포넌트가 컴포넌트의 루트 요소에 추가되는 임의의 속성을 허용해야하는 이유입니다.
+(이 컴포넌트를 사용할 개발자가 어떤 속성을 쓸지 모른다. 그렇기 때문에 어떤 속성값이든 받아들인다.)
+-->
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="https://kr.vuejs.org/js/vue.js"></script>
+    <!-- jquery : https://jquery.com/ -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <!-- bootstrap : http://getbootstrap.com/ -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"/>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <!-- bootstrap datepicker : http://bootstrap-datepicker.readthedocs.io/en/latest/index.html -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.min.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/locales/bootstrap-datepicker.ko.min.js"></script>
+    <style>
+        /* Disable native datepicker */
+        input[type=date]::-webkit-inner-spin-button,
+        input[type=date]::-webkit-calendar-picker-indicator {
+            display: none;
+        }
+
+        #app {
+            width: 200px;
+            margin: 10px;
+        }
+    </style>
+</head>
+
+<body>
+<div id="app">
+    <bs-data-input data-3d-date-picker="true"></bs-data-input>
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    Vue.component('bs-data-input', {
+        template: '<input type="date" class="form-control">',
+        mounted: function () {
+            $(this.$el).datepicker();
+        }
+    });
+
+    const vm = new Vue({
+        el: '#app'
+    });
+</script>
+
+</body>
+
+</html>

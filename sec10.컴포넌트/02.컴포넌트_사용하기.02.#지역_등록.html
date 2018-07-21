@@ -1,0 +1,39 @@
+<!--
+컴포넌트
+컴포넌트 사용하기
+# 지역 등록
+
+모든 컴포넌트를 전역으로 등록 할 필요는 없습니다.
+컴포넌트를 components 인스턴스 옵션으로 등록함으로써 다른 인스턴스/컴포넌트의 범위에서만 사용할 수있는 컴포넌트를 만들 수 있습니다
+-->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://kr.vuejs.org/js/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <my-component></my-component>
+    <!--
+    <div>사용자 정의 컴포넌트 입니다!</div>
+    -->
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    const vm = new Vue({
+        el: '#app',
+        components: {
+            // <my-component> 는 상위 템플릿에서만 사용할 수 있습니다.
+            'my-component': {
+                template: '<div>사용자 정의 컴포넌트 입니다!</div>'
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

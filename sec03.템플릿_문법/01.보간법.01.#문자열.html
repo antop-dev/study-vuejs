@@ -1,0 +1,51 @@
+<!--
+템플릿 문법
+보간법(Interpolation)
+# 문자열
+-->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://kr.vuejs.org/js/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <div>
+        <!--
+        데이터 바인딩의 가장 기본 형태는 "Mustache" 구문(이중 중괄호)을 사용한 텍스트 보간입니다.
+        Mustache 태그는 해당 데이터 객체의 msg 속성 값으로 대체됩니다.
+        또한 데이터 객체의 msg 속성이 변경될 때 마다 갱신됩니다.
+        -->
+        <span>메시지: {{ msg }}</span>
+    </div>
+
+    <div>
+        <!--
+        v-once 디렉티브를 사용하여 데이터 변경 시 업데이트 되지 않는 일회성 보간을 수행할 수 있지만,
+        같은 노드의 바인딩에도 영향을 미친다는 점을 유의해야 합니다.
+        -->
+        <span v-once>
+            다시는 변경하지 않습니다: {{ msg }}
+            <!-- a 도 변경되지 않는다 -->
+            <span> - {{ a }}</span>
+        </span>
+
+    </div>
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            msg: 'Hello!',
+            a: 1
+        }
+    });
+</script>
+
+</body>
+</html>

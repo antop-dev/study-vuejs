@@ -1,0 +1,31 @@
+<!--
+폼 입력 바인딩
+기본 사용법
+# 문자열
+-->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://kr.vuejs.org/js/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <input v-model="message" placeholder="여기를 수정해보세요">
+    <p>메시지: {{ message }}</p>
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            message: ''
+        }
+    });
+</script>
+
+</body>
+</html>

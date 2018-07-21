@@ -1,0 +1,78 @@
+<!--
+폼 입력 바인딩
+기본 사용법
+# 셀렉트
+-->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://kr.vuejs.org/js/vue.js"></script>
+</head>
+<body>
+
+<p id="app1">
+    <select v-model="selected">
+        <!--
+        v-model 표현식의 초기 값이 어떤 옵션에도 없으면, <select> 엘리먼트는 "선택없음" 상태로 렌더링됩니다.
+        iOS에서는 이 경우 변경 이벤트가 발생하지 않아 사용자가 첫 번째 항목을 선택할 수 없게됩니다.
+        따라서 아래처럼 사용하지 않는 옵션에 빈 값을 넣는 것이 좋습니다.
+        -->
+        <option disabled value="">Please select one</option>
+        <option>A</option>
+        <option>B</option>
+        <option>C</option>
+    </select>
+    <span>선택함: {{ selected }}</span>
+</p>
+
+<p id="app2">
+    <select v-model="selected" multiple>
+        <!-- value 속성값이 없으면 <option></option> 태그 내의 text 값을 사용한다. -->
+        <option>A</option>
+        <option>B</option>
+        <option>C</option>
+    </select>
+    <br>
+    <span>Selected: {{ selected }}</span>
+</p>
+
+<p id="app3">
+    <select v-model="selected">
+        <option v-for="(o, i) in options" :value="o.value" :key="i">{{ o.text }}</option>
+    </select>
+    <span>Selected: {{ selected }}</span>
+</p>
+
+<script>
+    Vue.config.devtools = true;
+
+    const vm1 = new Vue({
+        el: '#app1',
+        data: {
+            selected: ''
+        }
+    });
+
+    const vm2 = new Vue({
+        el: '#app2',
+        data: {
+            selected: []
+        }
+    });
+
+    const vm3 = new Vue({
+        el: '#app3',
+        data: {
+            selected: 'A',
+            options: [
+                {text: 'One', value: 'A'},
+                {text: 'Two', value: 'B'},
+                {text: 'Three', value: 'C'}
+            ]
+        }
+    });
+</script>
+
+</body>
+</html>

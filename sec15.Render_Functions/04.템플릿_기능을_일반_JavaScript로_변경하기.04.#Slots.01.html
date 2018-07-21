@@ -1,0 +1,50 @@
+<!--
+재사용 & 컴포지션
+> Render Functions & JSX
+ > 템플릿 기능을 일반 JavaScript로 변경하기
+   # Slots
+
+this.$slots에서 정적 슬롯 내용을 VNodes의 배열로 접근할 수 있습니다.
+-->
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="https://kr.vuejs.org/js/vue.js"></script>
+</head>
+
+<body>
+
+<div id="app">
+    <h1>나는 부모 컴포넌트의 제목입니다</h1>
+    <my-component>
+        <p>이것은 원본 컨텐츠 입니다.</p>
+        <p>이것은 원본 중 추가 컨텐츠 입니다</p>
+    </my-component>
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    Vue.component('my-component', {
+        render: function (createElement) {
+            // `<div><slot></slot></div>`
+            const vnode = createElement('div', this.$slots.default);
+
+            console.log('vnode:', vnode);
+            console.log('this:', this);
+            return vnode;
+        }
+    });
+
+    const vm = new Vue({
+        el: '#app'
+    });
+
+    console.log('vm instance:', vm);
+</script>
+
+</body>
+</html>
+

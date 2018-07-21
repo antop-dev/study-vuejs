@@ -1,0 +1,90 @@
+<!--
+트랜지션 & 애니메이션
+단일 엘리먼트 / 컴포넌트 트랜지션
+# 트랜지션과 애니메이션을 함께 사용하기
+
+그러나 어떤 경우에는 같은 엘리먼트 (예: Vue에 의해 트리거 된 CSS 애니메이션)와 함께 호버에 대한 CSS 트랜지션 효과를 둘 다 가질 수도 있습니다.
+이러한 경우,type 속성에서 Vue가 지켜 볼 타입을 명시적으로 선언해야 합니다.
+값은 animation 또는 transition 입니다.
+-->
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="https://kr.vuejs.org/js/vue.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/animate.css@3.5.1" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+
+<div id="app">
+    <button @click="show = !show">Toggle show</button>
+    <!--
+    type : transition or animation
+    transition : 1초
+    animation : 4초
+    -->
+    <transition name="duplx" type="animation" @after-enter="afterEnter" @after-leave="afterLeave">
+        <p v-if="show" @transitionend="transitionEnd" @animationend="animationEnd">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris facilisis enim libero, at lacinia
+            diam fermentum id. Pellentesque habitant morbi tristique senectus et netus.
+        </p>
+    </transition>
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            show: true
+        },
+        methods: {
+            transitionEnd: function () {
+                console.log('css transition end.');
+            },
+            animationEnd: function () {
+                console.log('css animation end');
+            },
+            afterEnter: function (el) {
+                console.log('vue transition after enter.');
+            },
+            afterLeave: function (el) {
+                console.log('vue transition after leave.');
+            }
+        }
+    });
+</script>
+
+<style>
+    .duplx-enter-active {
+        transition: opacity 1s;
+        animation: bounce-in 4s;
+    }
+
+    .duplx-leave-active {
+        transition: opacity 1s;
+        animation: bounce-in 4s reverse;
+    }
+
+    .duplx-enter, .duplx-leave-to {
+        opacity: 0;
+    }
+
+    @keyframes bounce-in {
+        0% {
+            transform: scale(0);
+        }
+        50% {
+            transform: scale(1.5);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+</style>
+
+</body>
+</html>

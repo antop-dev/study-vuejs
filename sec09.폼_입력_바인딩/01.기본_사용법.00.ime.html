@@ -1,0 +1,42 @@
+<!--
+폼 입력 바인딩
+기본 사용법
+
+IME (중국어, 일본어, 한국어 등)가 필요한 언어의 경우 IME 중 v-model이 업데이트 되지 않습니다.
+이러한 업데이트를 처리하려면 input 이벤트를 대신 사용하십시오.
+
+IME? (https://m.blog.naver.com/cstudykr/220433199180)
+dks : d -> 입력! -> k -> 입력! -> s -> 입력!
+안 : ㅇㅏㄴ -> 입력!
+-->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://kr.vuejs.org/js/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <input @input="input" :value="message" placeholder="여기를 수정해보세요">
+    <p>메시지: {{ message }}</p>
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            message: ''
+        },
+        methods: {
+            input: function (event) {
+                this.message = event.target.value;
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

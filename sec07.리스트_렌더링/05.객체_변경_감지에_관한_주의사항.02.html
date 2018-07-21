@@ -1,0 +1,38 @@
+<!--
+리스트 랜더링
+객체 변경 감지에 관한 주의사항
+-->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://kr.vuejs.org/js/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <p>a : {{ a }}</p>
+    <button type="button" onclick="add()">add b property</button>
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            a: 1 // `vm.a` 는 반응형입니다.
+        }
+    });
+
+    const add = function() {
+        // (x)
+        // 어차피 처음에 b 를 빈값으로라도 선언하지 않으면 템플릿에서 사용이 안된다.
+        // <p>b : {{ b }}</p>
+        Vue.set(vm.$data, 'b', 2);
+    }
+
+</script>
+
+</body>
+</html>

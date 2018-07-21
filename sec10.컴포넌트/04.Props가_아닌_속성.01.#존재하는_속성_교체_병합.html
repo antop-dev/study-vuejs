@@ -1,0 +1,70 @@
+<!--
+컴포넌트
+Props가 아닌 속성
+# 존재하는 속성 교체/병합
+-->
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="https://kr.vuejs.org/js/vue.js"></script>
+    <!-- jquery : https://jquery.com/ -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <!-- bootstrap : http://getbootstrap.com/ -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"/>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <!-- bootstrap datepicker : http://bootstrap-datepicker.readthedocs.io/en/latest/index.html -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.min.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/locales/bootstrap-datepicker.ko.min.js"></script>
+    <style>
+        /* Disable native datepicker */
+        input[type=date]::-webkit-inner-spin-button,
+        input[type=date]::-webkit-calendar-picker-indicator {
+            display: none;
+        }
+
+        #app {
+            width: 200px;
+            margin: 10px;
+        }
+    </style>
+</head>
+
+<body>
+<div id="app">
+    <!-- date-picker-theme-dark는 부모에 의해 컴포넌트로 전달 -->
+    <bs-data-input
+            class="date-picker-theme-dark"
+            data-date-language="ko"
+            data-date-format="yyyy-mm-dd"
+            data-date-autoclose="true">
+    </bs-data-input>
+    <!--
+    대부분의 속성의 경우 컴포넌트에 제공된 값은 컴포넌트에서 설정된 값을 대체합니다.
+    class와 style 속성은 똑똑하기 때문에 두 값이 합쳐져서 최종 값인 form-control date-picker-theme-dark를 만듭니다.
+    -->
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    Vue.component('bs-data-input', {
+        // 템플릿의 컴포넌트에 의해 설정된 form-control
+        template: '<input type="date" class="form-control">',
+        mounted: function () {
+            $(this.$el).datepicker();
+        }
+    });
+
+    const vm = new Vue({
+        el: '#app'
+    });
+</script>
+
+</body>
+
+</html>

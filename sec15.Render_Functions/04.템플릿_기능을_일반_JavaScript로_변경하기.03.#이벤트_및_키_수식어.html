@@ -1,0 +1,106 @@
+<!--
+재사용 & 컴포지션
+> Render Functions & JSX
+ > 템플릿 기능을 일반 JavaScript로 변경하기
+   # 이벤트 및 키 수식어
+
+.passive, .capture 및 .once 이벤트 수식어를 위해 Vue는 on과 함께 사용할 수있는 접두사를 제공합니다
+* .passive: &
+* .capture : !
+* .once: ~
+* .capture.once 또는 .once.capture: ~!
+
+다른 모든 이벤트 및 키 수식어의 경우 처리기에서 이벤트 메서드를 간단하게 사용할 수 있으므로 고유한 접두사는 필요하지 않습니다.
+* .stop: event.stopPropagation()
+* .prevent: event.preventDefault();
+* .self: if (event.target !== event.currentTarget) return
+* .enter .13: if (event.keyCode !== 13) return (13을 다른 키 수식어의 다른 키 코드로 변경합니다.)
+* .ctrl, .alt, .shift, .meta: if (!event.ctrlKey) return (ctrlKey를 altKey, shiftKey 또는 metaKey로 각각 변경하십시오.)
+-->
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="https://kr.vuejs.org/js/vue.js"></script>
+</head>
+
+<body>
+
+<div id="app">
+    <my-comp/>
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    const p = function (createElement, vnode) {
+        return createElement('p', [vnode]);
+    };
+
+    Vue.component('my-comp', {
+        props: ['value'],
+        render: function (createElement) {
+            const root = createElement('div', {}, []);
+
+            // .once 구현
+            const once = createElement('button', {
+                domProps: {
+                    innerText: '.once'
+                },
+                on: {
+                    '~click': function (event) {
+                        alert('clicked!');
+                    }
+                }
+            });
+
+            // .ctrl.prevent 구현
+            const prevent = createElement('a', {
+                attrs: {
+                    href: 'https://github.com/antop-dev/study-vuejs'
+                },
+                domProps: {
+                    innerText: '.ctrl.prevent'
+                },
+                on: {
+                    'click': function (event) {
+                        if (event.ctrlKey) {
+                            alert('.prevent clicked');
+                            event.preventDefault();
+                        }
+                    }
+                }
+            });
+
+            // .enter 구현
+            const enter = createElement('input', {
+                attrs: {
+                    width: 10,
+                    value: '.enter'
+                },
+                on: {
+                    'keyup': function (event) {
+                        if (event.keyCode == 13) {
+                            alert('keyup enter!');
+                        }
+                    }
+                }
+            });
+
+            root.children.push(createElement('p', {}, [once]));
+            root.children.push(createElement('p', [prevent]));
+            root.children.push(createElement('p', [enter]));
+
+            return root;
+        }
+    });
+
+    const vm = new Vue({
+        el: '#app'
+    });
+</script>
+
+</body>
+</html>
+

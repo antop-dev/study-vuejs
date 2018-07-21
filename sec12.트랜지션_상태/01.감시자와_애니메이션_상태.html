@@ -1,0 +1,58 @@
+<!--
+트랜지션 상태
+감시자와 애니메이션 상태
+
+감시자를 사용하면 숫자 속성의 변경 사항을 다른 속성으로 애니메이션 할 수 있습니다.
+처음에는 복잡해 보일 수도 있으므로 Tween.js를 사용하여 예제를 살펴 보겠습니다.
+-->
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="https://kr.vuejs.org/js/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tween.js@16.3.4"></script>
+</head>
+
+<body>
+
+<div id="app">
+    <input v-model.number="number" type="number" step="20">
+    <p>{{ animatedNumber }}</p>
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            number: 0,
+            animatedNumber: 0
+        },
+        watch: {
+            number: function (newValue, oldValue) {
+                var vm = this;
+
+                function animate() {
+                    if (TWEEN.update()) {
+                        requestAnimationFrame(animate);
+                    }
+                }
+
+                const tween = new TWEEN.Tween({tweeningNumber: oldValue})
+                    .easing(TWEEN.Easing.Quadratic.Out)
+                    .to({tweeningNumber: newValue}, 500)
+                    .onUpdate(function () {
+                        vm.animatedNumber = this.tweeningNumber.toFixed(0)
+                    });
+                tween.start();
+
+                animate();
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!--
+컴포넌트
+컴포넌트 사용하기
+# DOM 템플릿 구문 분석 경고
+
+DOM을 템플릿으로 사용할 때 (예 : el 옵션을 사용하여 기존 콘텐츠가 있는 엘리먼트를 마운트하는 경우),
+Vue는 템플릿 콘텐츠만 가져올 수 있기 때문에 HTML이 작동하는 방식에 고유한 몇 가지 제한 사항이 적용됩니다.
+
+이는 브라우저가 구문 분석과 정규화한 후에 작동합니다.
+가장 중요한 것은<ul>,<ol>,<table>과<select>와 같은 일부 엘리먼트는 그 안에 어떤 엘리먼트가 나타날 수 있는지에 대한 제한을 가지고 있으며,
+<option>과 같이 특정 다른 엘리먼트 안에만 나타날 수 있습니다.
+-->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://kr.vuejs.org/js/vue.js"></script>
+</head>
+<body>
+
+<div id="app1">
+    <table>
+        <my-row></my-row>
+    </table>
+</div>
+
+<div id="app2">
+    <table>
+        <tr is="my-row"></tr>
+    </table>
+</div>
+
+<div id="app3">
+    <table>
+        <my-tr></my-tr>
+    </table>
+</div>
+
+<div id="app4">
+    <table>
+        <tr is="my-tr"></tr>
+    </table>
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    Vue.component('my-row', {
+        template: '<div>my-row</div>'
+    });
+
+    Vue.component('my-tr', {
+        template:
+        '<tr>\n' +
+        '    <td>col-1</td>\n' +
+        '    <td>col-2</td>\n' +
+        '    <td>col-3</td>\n' +
+        '</tr>'
+    });
+
+    const vm1 = new Vue({
+        el: '#app1'
+    });
+
+    const vm2 = new Vue({
+        el: '#app2'
+    });
+
+    const vm3 = new Vue({
+        el: '#app3'
+    });
+
+    const vm4 = new Vue({
+        el: '#app4'
+    });
+</script>
+
+</body>
+</html>

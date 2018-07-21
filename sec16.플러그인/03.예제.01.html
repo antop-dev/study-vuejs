@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+
+    <script src="https://kr.vuejs.org/js/vue.js"></script>
+    <!-- https://github.com/julon/vue-moment-lib -->
+    <script src="https://rawgit.com/brockpetrie/vue-moment/master/dist/vue-moment.js"></script>
+</head>
+
+<body>
+
+<div id="app">
+    <!-- or create a new date from 'now' -->
+    <span>{{ new Date() | moment("YYYY-MM-DD HH:mm") }}</span>
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    Vue.use(vueMoment);
+
+    const vm = new Vue({
+        el: '#app'
+    });
+</script>
+
+</body>
+</html>

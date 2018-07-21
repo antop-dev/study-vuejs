@@ -1,0 +1,42 @@
+<!--
+재사용 & 컴포지션
+믹스인
+옵션 병합
+
+mixin과 컴포넌트 자체에 중첩 옵션이 포함되어 있으면 적절한 전략을 사용하여 "병합"됩니다.
+예를 들어, 같은 이름의 훅 함수가 배열에 병합되어 모든 함수가 호출됩니다.
+또한 mixin 훅은 컴포넌트 자체의 훅 이전에 호출됩니다.
+-->
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="https://kr.vuejs.org/js/vue.js"></script>
+</head>
+
+<body>
+
+<script>
+    Vue.config.devtools = true;
+
+    const mixin = {
+        // 믹스인의 훅이 먼저 실행된다.
+        created: function () {
+            console.log('mixin hook called')
+        }
+    };
+
+    new Vue({
+        mixins: [mixin],
+        created: function () {
+            console.log('component hook called')
+        }
+    });
+
+    // => "mixin hook called"
+    // => "component hook called"
+</script>
+
+</body>
+</html>

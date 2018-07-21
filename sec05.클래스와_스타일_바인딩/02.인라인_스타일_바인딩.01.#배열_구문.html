@@ -1,0 +1,39 @@
+<!--
+인라인 스타일 바인딩
+# 배열 구문
+-->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://kr.vuejs.org/js/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <!-- 다시, 객체 구문은 종종 객체를 반환하는 계산된 속성과 함께 사용합니다. -->
+    <!--
+    Antop: 중복된 속성일 경우 나중의 것이 적용 된다.
+    -->
+    <div v-bind:style="[baseStyles, overridingStyles]">인라인 스타일 바인딩 - &#35; 배열 구문</div>
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            baseStyles: {
+                fontSize: '13px',
+                color: 'red'
+            },
+            overridingStyles: {
+                fontSize: '15px'
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

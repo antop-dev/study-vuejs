@@ -1,0 +1,44 @@
+<!--
+이벤트 핸들링
+키 수식어
+# 오토매틱 키 수식어 (2.5.0+)
+
+KeyboardEvent.key를 통해 노출된 유효 키 이름을 수식어로 직접 사용할 수 있습니다.
+
+https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values
+-->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://kr.vuejs.org/js/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <p>
+        <input @keyup.page-down="onPageDown" placeholder="@keyup.page-down">
+    </p>
+    <p>
+        <input @keydown.arrow-up="onArrowUp" placeholder="@keydown.arrow-up">
+    </p>
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    const vm = new Vue({
+        el: '#app',
+        methods: {
+            onPageDown: function (e) {
+                console.log("input : " + e.target.value);
+            },
+            onArrowUp: function (e) {
+                console.log("input : " + e.target.value);
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

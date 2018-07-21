@@ -1,0 +1,70 @@
+<!--
+트랜지션 & 애니메이션
+엘리먼트 간 트랜지션
+
+컴포넌트 사이의 트랜지션에 대해서는 나중에 설명하지만 v-if /v-else를 사용하여 원본 엘리먼트 사이를 트랜지션 할 수도 있습니다.
+가장 일반적인 두 엘리먼트 트랜지션 중 하나는 목록 컨테이너와 빈 목록을 설명하는 메시지 사이에 사용됩니다.
+-->
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="https://kr.vuejs.org/js/vue.js"></script>
+</head>
+
+<body>
+
+<div id="app">
+    <p>
+        <button @click="clear">clear</button>
+        <button @click="recover">recover</button>
+    </p>
+    <transition>
+        <ul v-if="items.length > 0">
+            <li v-for="item of items">{{item}}</li>
+        </ul>
+        <p v-else>Sorry, no items found.</p>
+    </transition>
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    const original = [
+        '트랜지션 클래스',
+        'CSS 트랜지션',
+        'CSS 애니메이션',
+        '사용자 지정 트랜지션 클래스',
+        '트랜지션과 애니메이션을 함께 사용하기',
+        '명시적 트랜지션 지속 시간'
+    ];
+
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            items: original.slice(0)
+        },
+        methods: {
+            recover: function () {
+                this.items = original.slice(0);
+            },
+            clear: function () {
+                this.items = [];
+            }
+        }
+    });
+</script>
+
+<style type="text/css">
+    .v-enter-active, .v-leave-active {
+        transition: opacity .5s;
+    }
+
+    .v-enter, .v-leave-to {
+        opacity: 0;
+    }
+</style>
+
+</body>
+</html>

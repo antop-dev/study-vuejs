@@ -1,0 +1,85 @@
+<!--
+트랜지션 & 애니메이션
+리스트 트랜지션
+
+* 개별 노드들
+* 한번에 하나만 렌더링 되는 여러 노드
+
+그렇다면v-for를 사용하여 동시에 렌더링 하고자 하는 항목의 전체 목록이 있는 경우는 어떨까요?
+이 경우 우리는<transition-group> 컴포넌트를 사용합니다.
+예를 들어보기 전에 이 컴포넌트에 대해 알아야 할 몇 가지 중요한 사항이 있습니다.
+
+* <transition> 과 달리, 실제 요소인 <span>을 렌더링합니다. tag 속성으로 렌더링 된 요소를 변경할 수 있습니다.
+* 엘리먼트의 내부 구현은 항상 필요합니다 고유한 key 속성을 갖습니다
+
+이제 이전에 사용한 것과 같은 CSS 클래스를 사용하여 들어가고 떠나는 간단한 예제를 살펴 보겠습니다.
+
+
+# 리스트의 진입 / 진출 트랜지션
+
+지금까지 다음과 같은 트랜지션을 다루었습니다.
+-->
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="https://kr.vuejs.org/js/vue.js"></script>
+</head>
+
+<body>
+
+<div id="app">
+    <button @click="add">Add</button>
+    <button @click="remove">Remove</button>
+    <transition-group name="list" tag="p">
+        <!--
+        v-bind:key="" 가 없으면?
+        [Vue warn]: <transition-group> children must be keyed: <span>
+        -->
+        <span v-for="item in items" :key="item" class="list-item">{{ item }}</span>
+    </transition-group>
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    new Vue({
+        el: '#app',
+        data: {
+            items: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+            nextNum: 10
+        },
+        methods: {
+            randomIndex: function () {
+                return Math.floor(Math.random() * this.items.length);
+            },
+            add: function () {
+                this.items.splice(this.randomIndex(), 0, this.nextNum++);
+            },
+            remove: function () {
+                this.items.splice(this.randomIndex(), 1);
+            }
+        }
+    });
+</script>
+
+<style type="text/css">
+    .list-item {
+        display: inline-block;
+        margin-right: 10px;
+    }
+
+    .list-enter-active, .list-leave-active {
+        transition: all 1s;
+    }
+
+    /* .list-leave-active below version 2.1.8 */
+    .list-enter, .list-leave-to {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+</style>
+
+</body>
+</html>

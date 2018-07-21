@@ -1,0 +1,97 @@
+<!--
+트랜지션 & 애니메이션
+단일 엘리먼트 / 컴포넌트 트랜지션
+# JavaScript 훅
+
+속성에서 JavaScript 훅을 정의할 수 있습니다.
+-->
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="https://kr.vuejs.org/js/vue.js"></script>
+    <!-- Velocity는 jQuery.animate와 매우 비슷하게 동작하며 -->
+    <!-- JavaScript 애니메이션의 훌륭한 옵션입니다. -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.min.js"></script>
+</head>
+
+<body>
+
+<div id="app">
+    <button @click="show = !show">Toggle</button>
+
+    <!--
+    자바스크립트 훅 사용시 #[사용자 지정 트랜지션 클래스] 떄와 마찬가지로 #[트랜지션 클래스]가 자동으로 동작하게 된다.
+
+    아래 설정이면 name 속성값이 없기 때문에 v- 트랜지션 클래스가 추가되게 된다.
+    * enter: <p style="..." class="v-enter-active velocity-animating v-enter-to">...</p>
+    * leave: <p style="..." class="v-leave-active velocity-animating v-leave-to">...</p>
+    
+    :css="false" 속성을 사용하게 되면 #[트랜지션 클래스]가 작동하지 않게 할 수 있다.
+    * enter: <p style="..." class="velocity-animating">...</p>
+    * leave: <p style="..." class="velocity-animating">...</p>
+    -->
+    <transition @before-enter="beforeEnter" @enter="enter" @leave="leave" :css="false">
+        <p v-if="show">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris facilisis enim libero, at lacinia
+            diam fermentum id. Pellentesque habitant morbi tristique senectus et netus.
+        </p>
+    </transition>
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            show: false
+        },
+        methods: {
+            beforeEnter: function (el) {
+                el.style.opacity = 0;
+            },
+            enter: function (el, done) {
+                Velocity(el, {
+                    opacity: 1,
+                    fontSize: '1.4em'
+                }, {
+                    duration: 300
+                });
+
+                Velocity(el, {
+                    fontSize: '1em'
+                }, {
+                    complete: done
+                });
+            },
+            leave: function (el, done) {
+                Velocity(el, {
+                    translateX: '15px',
+                    rotateZ: '50deg'
+                }, {
+                    duration: 600
+                });
+
+                Velocity(el, {
+                    rotateZ: '100deg'
+                }, {
+                    loop: 2
+                });
+
+                Velocity(el, {
+                    rotateZ: '45deg',
+                    translateY: '30px',
+                    translateX: '30px',
+                    opacity: 0
+                }, {
+                    complete: done
+                });
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

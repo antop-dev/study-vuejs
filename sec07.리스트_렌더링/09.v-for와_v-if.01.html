@@ -1,0 +1,48 @@
+<!--
+리스트 랜더링
+v-for 와 v-if
+
+동일한 노드에 두가지 모두 있다면, v-for가 v-if보다 높은 우선순위를 갖습니다.
+즉, v-if는 루프가 반복될 때마다 실행됩니다.
+이는 _일부_ 항목만 렌더링 하려는 경우 유용합니다.
+-->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://kr.vuejs.org/js/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <ul>
+        <li v-for="todo in todos" v-if="!todo.isComplete">{{ todo.title }}</li>
+    </ul>
+</div>
+
+
+<script>
+    Vue.config.devtools = true;
+
+    const todos = [{
+        title: '카이 호스트만의 코어 자바8',
+        isComplete: true
+    }, {
+        title: '모던 웹을 위한 Node.js 프로그래밍',
+        isComplete: false
+    }, {
+        title: '실전 스프링 부트 워크북',
+        isComplete: false
+    }];
+
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            todos : todos
+        }
+    });
+    // todo.isComplete 값의 변화에 따라 렌더링이 변하지 않는다.
+</script>
+
+</body>
+</html>

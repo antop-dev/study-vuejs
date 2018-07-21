@@ -1,0 +1,34 @@
+<!--
+폼 입력 바인딩
+값 바인딩하기
+# 체크박스
+-->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://kr.vuejs.org/js/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <!--
+    false-value가 의미가 있을까?
+    true-value의 값("yes")이 아니면 전부 false 인거 같은데....
+    -->
+    <input type="checkbox" v-model="toggle" true-value="yes" false-value="no"/>
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            toggle: 'yes'
+        }
+    });
+</script>
+
+</body>
+</html>

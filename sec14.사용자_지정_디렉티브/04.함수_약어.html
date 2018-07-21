@@ -1,0 +1,40 @@
+<!--
+재사용 & 컴포지션
+사용자 지정 디렉티브
+함수 약어
+
+많은 경우에, bind와 update에서 같은 동작이 필요할 수 있습니다.
+그러나 다른 훅은 신경 쓸 필요가 없습니다.
+-->
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="https://kr.vuejs.org/js/vue.js"></script>
+</head>
+
+<body>
+
+<div id="app">
+    <input type="text" v-model="message" />
+    <p v-color-swatch="message">input: {{ message }}</p>
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    Vue.directive('color-swatch', function (el, binding) {
+        el.style.backgroundColor = binding.value;
+    });
+
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            message: ''
+        }
+    });
+</script>
+
+</body>
+</html>

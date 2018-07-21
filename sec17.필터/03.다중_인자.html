@@ -1,0 +1,53 @@
+<!--
+재사용 & 컴포지션
+> 필터
+
+필터는 기본적으로 자바스크립트 함수이기 때문에 두개 이상의 인수를 받을 수 있습니다.
+-->
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="https://kr.vuejs.org/js/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
+</head>
+
+<body>
+
+<div id="app">
+    <div>
+        <input type="text" v-model="message"/>
+        <!-- 중괄호 보간법 -->
+        <p>result: {{ message | filterA('vue-', '-js') }}</p>
+    </div>
+</div>
+
+<script>
+    Vue.config.devtools = true;
+
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            message: 'hello! antop.'
+        },
+        filters: {
+            /**
+             *
+             * @param value 대상 값
+             * @param prefix 보간법에서 사용한 첫번째 인자가 두번째 인자로 선언된다. 주의!
+             * @param suffix 보간법에서 사용한 두번째 인자가 세번째 인자로 선언된다. 주의!
+             * @returns {*}
+             */
+            filterA: function (value, prefix, suffix) {
+                let result = _.kebabCase(prefix + value + suffix);
+                console.log('filterA "' + value + '" -> "' + result + '"');
+                return result;
+            }
+        }
+    });
+</script>
+
+
+</body>
+</html>
