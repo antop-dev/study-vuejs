@@ -31,7 +31,7 @@ HTML, CSS, JaavaScript를 아시죠? 가이드를 읽고, 지금 바로 만들�
 * [Section 07: 리스트 렌더링](sec07.리스트_렌더링) : https://kr.vuejs.org/v2/guide/list.html
 * [Section 08: 이벤트 핸들링](sec08.이벤트_핸들린) : https://kr.vuejs.org/v2/guide/events.html
 * [Section 09: 폼 입력 바인딩](sec09.폼_입력_바인딩) : https://kr.vuejs.org/v2/guide/forms.html
-* [Section 10: 폼 입력 바인딩](sec10.컴포넌트) : https://kr.vuejs.org/v2/guide/components.html
+* [Section 10: 컴포넌트](sec10.컴포넌트) : https://kr.vuejs.org/v2/guide/components.html
 
 ### 트랜지션 & 애니메이션
 * [Section 11: 진입/진출 그리고 리스트 트랜지션](sec11.진입_진출_그리고_리스트_트랜지션) : https://kr.vuejs.org/v2/guide/transitions.html
@@ -43,3 +43,7 @@ HTML, CSS, JaavaScript를 아시죠? 가이드를 읽고, 지금 바로 만들�
 * [Section 15: sec15.Render_Functions & JSX](sec15.Render_Functions) : https://kr.vuejs.org/v2/guide/render-function.html
 * [Section 16: sec16.플러그인](sec16.플러그인) : https://kr.vuejs.org/v2/guide/plugins.html
 * [Section 17: sec17.필터](sec17.필터) : https://kr.vuejs.org/v2/guide/filters.html
+
+### 도구
+
+* [Section:18: 프로덕션 배포 팁](sec18.프로덕션_배포_팁) : https://kr.vuejs.org/v2/guide/deployment.html
